@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, TextInput, Image, Pressable } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 
@@ -14,6 +14,10 @@ const PaymentBranch = (props) => {
   const { route, navigation } = props
   const { product } = route.params || {}
 
+  const [quantity, setQuantity] = useState(1)
+  const [address, setAddress] = useState('')
+  const [paymentItems, setPaymentItems] = useState()
+
   if (!product) {
     return <Text>No product data available</Text>
   }
@@ -23,9 +27,6 @@ const PaymentBranch = (props) => {
     navigation.goBack()
   }
 
-  let quantity = 1
-  let address = ''
-  let paymentMethod = 'PSE'
   let value = parseFloat(product.price.replace(/[^\d.-]/g, ''))
 
   const totalValue = value * quantity
@@ -76,7 +77,7 @@ const PaymentBranch = (props) => {
           value={quantity.toString()}
           keyboardType="numeric"
           maxLength={2}
-          onChangeText={(text) => { quantity = parseInt(text); }}
+          onChangeText={setQuantity}
         />
 
         <Text>Valor Total: {totalValue.toFixed(2)}</Text>
@@ -86,14 +87,14 @@ const PaymentBranch = (props) => {
           style={stylesPayment.input}
           value={address}
           maxLength={30}
-          onChangeText={(text) => { address = text; }}
+          onChangeText={setAddress}
         />
 
         <Text>Forma de Pago:</Text>
         <Picker
-          selectedValue={paymentMethod}
+          selectedValue={paymentItems}
           style={stylesPayment.picker}
-          onValueChange={(itemValue) => { paymentMethod = itemValue; }}
+          onValueChange={(itemValue, itemIndex) => setPaymentItems(itemValue)}
         >
           <Picker.Item label="PSE" value="PSE" />
           <Picker.Item label="Tarjeta de crédito" value="credit_card" />

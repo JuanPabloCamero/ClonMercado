@@ -15,18 +15,6 @@ const Menu = ({navigation}) => {
             </Text>
         </Pressable>
 
-        <Pressable style={styles.buttonMenu} onPress={() => navigation.navigate('ListOfItems')}>
-            <Text style={styles.buttonMenutText}>
-                List of items
-            </Text>
-        </Pressable>
-
-        <Pressable style={styles.buttonMenu} onPress={() => navigation.navigate('ArticleDetails')}>
-            <Text style={styles.buttonMenutText}>
-                Article details
-            </Text>
-        </Pressable>
-
         <Pressable style={styles.buttonMenu} onPress={() => navigation.navigate('ItemCategory')}>
             <Text style={styles.buttonMenutText}>
                 Item category

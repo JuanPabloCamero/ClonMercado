@@ -33,6 +33,8 @@ const Login = ({ navigation }) => {
 
         Alert.alert('Inicio de sesión exitoso', `Bienvenido ${username}`)
         navigation.navigate('Home')
+        setUsername('')
+        setPassword('')
 
     }
 

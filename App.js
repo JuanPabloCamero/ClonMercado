@@ -9,7 +9,6 @@ import Home from './src/components/Home'
 import Menu from './src/components/Menu'
 import PaymentBranch from './src/screens/PaymentBranch'
 import ShoppingCart from './src/screens/ShoppingCart'
-import ListOfItems from './src/screens/ListOfItems'
 import ArticleDetails from './src/screens/ArticleDetails'
 import ItemCategory from './src/screens/ItemCategory'
 import MyFavorites from './src/screens/MyFavorites'
@@ -30,7 +29,6 @@ const App = () => {
           <Stack.Screen name="Menu" component={Menu} options={{ headerShown: false }}/>
           <Stack.Screen name="PaymentBranch" component={PaymentBranch} options={{ headerShown: false }}/>
           <Stack.Screen name="ShoppingCart" component={ShoppingCart} options={{ headerShown: false }}/>
-          <Stack.Screen name="ListOfItems" component={ListOfItems} options={{ headerShown: false }}/>
           <Stack.Screen name="ArticleDetails" component={ArticleDetails} options={{ headerShown: false }}/>
           <Stack.Screen name="ItemCategory" component={ItemCategory} options={{ headerShown: false }}/>
           <Stack.Screen name="MyFavorites" component={MyFavorites} options={{ headerShown: false }}/>

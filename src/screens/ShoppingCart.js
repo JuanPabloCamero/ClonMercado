@@ -98,7 +98,7 @@ const ShoppingCart = ({ route, navigation }) => {
         data={cartItems}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
-        ListFooterComponent={<Text style={stylesCart.total}>Total: ${totalAmount.toFixed(2)}</Text>}
+        ListFooterComponent={<Text style={stylesCart.total}>Total: ${totalAmount}</Text>}
       />
 
       <Pressable onPress={() => alert('Proceeding to checkout')} style={stylesPayment.pagarButton}>
