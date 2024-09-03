@@ -8,11 +8,6 @@ const Menu = ({navigation}) => {
         <View style={styles.containerLogo}> 
             <Image source={require('../assets/logoMenu.png')} style={styles.Images}/>
         </View>
-        <Pressable style={styles.buttonMenu} onPress={() => navigation.navigate('PaymentBranch')}>
-            <Text style={styles.buttonMenutText}>
-               Payment branch
-            </Text>
-        </Pressable>
 
         <Pressable style={styles.buttonMenu} onPress={() => navigation.navigate('ShoppingCart')}>
             <Text style={styles.buttonMenutText}>

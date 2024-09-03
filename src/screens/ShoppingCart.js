@@ -1,78 +1,78 @@
-import React from 'react'
-import { TextInput, View, Pressable, FlatList, Text, Image, ScrollView } from 'react-native'
-import productsData from '../data/productsData'
+import React, { useState, useEffect } from 'react'
+import { 
+  View, 
+  FlatList, 
+  Text, 
+  Image, 
+  Pressable, 
+  TextInput 
+} from 'react-native'
 
 // Styles
-import { styles } from '../styles/HomeStyles'
 import { stylesCard } from '../styles/StylesCards'
 import { stylesCart } from '../styles/ShoppingCart'
+import { stylesPayment } from '../styles/PaymentStyles'
+import { styles } from '../styles/HomeStyles'
 
 // Icons
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import { stylesPayment } from '../styles/PaymentStyles'
 
-let cartItems = []
+const ShoppingCart = ({ route, navigation }) => {
+  const initialCartItems = route.params?.cartItems || []
+  const [cartItems, setCartItems] = useState(initialCartItems)
+  const [totalAmount, setTotalAmount] = useState(0)
 
-const addProduct = (product) => {
-  const existingItemIndex = cartItems.findIndex((item) => item.id === product.id)
-  if (existingItemIndex >= 0) {
-    cartItems[existingItemIndex].quantity += 1
-  } else {
-    cartItems.push({ ...product, quantity: 1 })
-  }
-}
+  useEffect(() => {
+    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    setTotalAmount(total)
+  }, [cartItems])
 
-const updateQuantity = (id, delta) => {
-  cartItems = cartItems.map((item) =>
-    item.id === id ? { ...item, quantity: Math.max(item.quantity + delta, 1) } : item
-  )
-}
+  const updateQuantity = (id, delta) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, quantity: Math.max(item.quantity + delta, 1) } : item
+      )
+    );
+  };
 
-const removeItem = (id) => {
-  cartItems = cartItems.filter((item) => item.id !== id)
-}
+  const removeItem = (id) => {
+    const updatedCartItems = cartItems.filter((item) => item.id !== id)
+    setCartItems(updatedCartItems)
 
-const filterProductsByCategory = (products) => {
-  const seenCategories = new Set()
-  return products.filter((product) => {
-    if (!seenCategories.has(product.category)) {
-      seenCategories.add(product.category)
-      return true
-    }
-    return false
-  })
-}
+    navigation.setParams({ cartItems: updatedCartItems });
+  };
 
-const renderItem = ({ item }) => (
-  <View style={stylesCart.cartItem}>
-    <Image source={item.image} style={stylesCart.thumbnail} />
-    <View style={stylesCart.itemInfo}>
-      <Text style={stylesCart.itemName}>{item.name}</Text>
-      <Text>{item.description}</Text>
-      <Text>{item.price}</Text>
-      <View style={stylesCart.quantityContainer}>
-        <Pressable onPress={() => updateQuantity(item.id, -1)} style={stylesCart.quantityButton}>
-          <Text>-</Text>
-        </Pressable>
-        <TextInput
-          style={stylesCart.quantityInput}
-          value={item.quantity.toString()}
-          keyboardType="numeric"
-          onChangeText={(text) => updateQuantity(item.id, parseInt(text) - item.quantity)}
-        />
-        <Pressable onPress={() => updateQuantity(item.id, 1)} style={stylesCart.quantityButton}>
-          <Text>+</Text>
+  const renderItem = ({ item }) => (
+    <View style={stylesCart.cartItem}>
+      <Image source={item.image} style={stylesCart.thumbnail} />
+      <View style={stylesCart.itemInfo}>
+        <Text style={stylesCart.itemName}>{item.name}</Text>
+        <Text>{item.description}</Text>
+        <Text>{item.price}</Text>
+        <View style={stylesCart.quantityContainer}>
+          <Pressable onPress={() => updateQuantity(item.id, -1)} style={stylesCart.quantityButton}>
+            <Text>-</Text>
+          </Pressable>
+          <TextInput
+            style={stylesCart.quantityInput}
+            value={item.quantity.toString()}
+            keyboardType="numeric"
+            onChangeText={(text) => {
+              const newQuantity = parseInt(text) || 1;
+              updateQuantity(item.id, newQuantity - item.quantity)
+            }}
+          />
+          <Pressable onPress={() => updateQuantity(item.id, 1)} style={stylesCart.quantityButton}>
+            <Text>+</Text>
+          </Pressable>
+        </View>
+        <Pressable onPress={() => removeItem(item.id)} style={stylesCart.removeButton}>
+          <Text style={{ color: 'red' }}>Remove</Text>
         </Pressable>
       </View>
-      <Pressable title="Remove" onPress={() => removeItem(item.id)} color="red" />
     </View>
-  </View>
-)
-
-const ShoppingCart = ({ navigation }) => {
-  const filteredProducts = filterProductsByCategory(productsData);
-  const totalAmount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
+  );
 
   return (
     <View style={stylesCard.container}>
@@ -93,36 +93,19 @@ const ShoppingCart = ({ navigation }) => {
           <AntDesign name="shoppingcart" size={30} color="black" />
         </Pressable>
       </View>
-      <ScrollView>
-        <View style={stylesCard.ListContainer}>
-          <FlatList
-            data={filteredProducts}
-            renderItem={({ item }) => (
-              <Pressable onPress={() => addProduct(item)}>
-                <View style={stylesCard.Card}>
-                  <Image source={item.image} style={stylesCard.Images} />
-                  <Text style={stylesCard.name}>{item.name}</Text>
-                  <Text style={stylesCard.price}>{item.price}</Text>
-                </View>
-              </Pressable>
-            )}
-            keyExtractor={(item) => item.id.toString()}
-          />
 
-          <FlatList
-            data={cartItems}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-            ListFooterComponent={<Text style={stylesCart.total}>Total: ${totalAmount.toFixed(2)}</Text>}
-          />
+      <FlatList
+        data={cartItems}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+        ListFooterComponent={<Text style={stylesCart.total}>Total: ${totalAmount.toFixed(2)}</Text>}
+      />
 
-          <Pressable onPress={() => alert('Proceeding to checkout')} style={stylesPayment.pagarButton}>
-            <Text>Proceed to checkout</Text>
-          </Pressable>
-        </View>
-      </ScrollView>
+      <Pressable onPress={() => alert('Proceeding to checkout')} style={stylesPayment.pagarButton}>
+        <Text>Proceed to checkout</Text>
+      </Pressable>
     </View>
-  )
-}
+  );
+};
 
-export default ShoppingCart
+export default ShoppingCart

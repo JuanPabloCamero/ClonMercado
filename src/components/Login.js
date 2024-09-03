@@ -1,13 +1,15 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Alert, Text, View, TextInput,Pressable,Image,} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { styles } from '../styles/GlobalStyles'
 
 const Login = ({ navigation }) => {
-    let username = ''
-    let password = ''
-    let usernameInput = null
-    let passwordInput = null
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+    useEffect(()=> {
+        console.log(`username change: ${username}`)
+    },[username])
 
     const validateUsername = (username) => {
         return username.length <= 10
@@ -32,13 +34,6 @@ const Login = ({ navigation }) => {
         Alert.alert('Inicio de sesión exitoso', `Bienvenido ${username}`)
         navigation.navigate('Home')
 
-        username = ''
-        password = ''
-
-        if (usernameInput && passwordInput) {
-            usernameInput.clear()
-            passwordInput.clear()
-        }
     }
 
     return (
@@ -51,7 +46,7 @@ const Login = ({ navigation }) => {
                 style={styles.input}
                 placeholder="Username"
                 defaultValue={username}
-                onChangeText={(text) => username = text}
+                onChangeText={setUsername}
                 maxLength={10}
                 autoCapitalize="none"
             />
@@ -61,7 +56,7 @@ const Login = ({ navigation }) => {
                     style={styles.passwordInput}
                     placeholder="Password"
                     defaultValue={password}
-                    onChangeText={(text) => password = text}
+                    onChangeText={setPassword}
                     secureTextEntry
                     maxLength={8}
                 />

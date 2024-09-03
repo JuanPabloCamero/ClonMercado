@@ -1,21 +1,28 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { View, Text, Alert, TextInput, Pressable, Image } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import { styles } from '../styles/GlobalStyles'
 import { colombiaData } from '../data/colombiaData'
 
 const Registers = ({ navigation }) => {
-  const usernameRef = useRef('')
-  const passwordRef = useRef('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [birthdate, setBirthdate] = useState('')
+  const [address, setAddress] = useState('')
+  const [selectedDepartment, setSelectedDepartment] = useState('')
+  const [selectedCity, setSelectedCity] = useState('')
+
   const emailRef = useRef('')
-  const birthdateRef = useRef('')
-  const addressRef = useRef('')
-  const selectedDepartmentRef = useRef('')
-  const selectedCityRef = useRef('')
-
-  const forceUpdate = React.useReducer(() => ({}), {})[1]
-
   const departments = Object.keys(colombiaData)
+
+  useEffect(() => {
+    if (emailRef.current !== email) {
+      emailRef.current = email
+    }
+  }, [email])
+
+  
   const getCityOptions = (dept) => colombiaData[dept] || []
 
   const validateUsername = (username) => username.length <= 10
@@ -43,14 +50,6 @@ const Registers = ({ navigation }) => {
   }
 
   const handleRegister = () => {
-    const username = usernameRef.current
-    const password = passwordRef.current
-    const email = emailRef.current
-    const birthdate = birthdateRef.current
-    const address = addressRef.current
-    const selectedDepartment = selectedDepartmentRef.current
-    const selectedCity = selectedCityRef.current
-
     if (!validateUsername(username)) {
       Alert.alert('Error', 'El nombre del usuario debe contener máximo 10 caracteres')
       return
@@ -83,15 +82,13 @@ const Registers = ({ navigation }) => {
     Alert.alert('Registro exitoso', `${username}`)
     navigation.navigate('Login')
 
-    usernameRef.current = ''
-    passwordRef.current = ''
-    emailRef.current = ''
-    birthdateRef.current = ''
-    addressRef.current = ''
-    selectedDepartmentRef.current = ''
-    selectedCityRef.current = ''
-
-    forceUpdate()
+    setUsername('')
+    setPassword('')
+    setEmail('')
+    setBirthdate('')
+    setAddress('')
+    setSelectedDepartment('')
+    setSelectedCity('')
   }
 
   return (
@@ -104,8 +101,8 @@ const Registers = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder='Username'
-        value={usernameRef.current}
-        onChangeText={(text) => { usernameRef.current = text; forceUpdate()}}
+        value={username}
+        onChangeText={setUsername}
         maxLength={10}
         autoCapitalize='none'
       />
@@ -113,8 +110,8 @@ const Registers = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder='Password'
-        value={passwordRef.current}
-        onChangeText={(text) => { passwordRef.current = text; forceUpdate()}}
+        value={password}
+        onChangeText={setPassword}
         secureTextEntry
         maxLength={8}
       />
@@ -122,8 +119,8 @@ const Registers = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder='Email'
-        value={emailRef.current}
-        onChangeText={(text) => { emailRef.current = text; forceUpdate()}}
+        value={email}
+        onChangeText={setEmail}
         autoCapitalize='none'
         keyboardType='email-address'
       />
@@ -131,25 +128,24 @@ const Registers = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder='Birthdate (YYYY-MM-DD)'
-        value={birthdateRef.current}
-        onChangeText={(text) => { birthdateRef.current = text; forceUpdate()}}
+        value={birthdate}
+        onChangeText={setBirthdate}
         keyboardType='numeric'
       />
 
       <TextInput
         style={styles.input}
         placeholder='Address'
-        value={addressRef.current}
-        onChangeText={(text) => { addressRef.current = text; forceUpdate()}}
+        value={address}
+        onChangeText={setAddress}
       />
 
       <View style={styles.pickerContainer}>
         <Picker
-          selectedValue={selectedDepartmentRef.current}
+          selectedValue={selectedDepartment}
           onValueChange={(itemValue) => {
-            selectedDepartmentRef.current = itemValue
-            selectedCityRef.current = ''
-            forceUpdate()
+            setSelectedDepartment(itemValue)
+            setSelectedCity('')
           }}
           style={styles.picker}
         >
@@ -162,16 +158,15 @@ const Registers = ({ navigation }) => {
 
       <View style={styles.pickerContainer}>
         <Picker
-          selectedValue={selectedCityRef.current}
+          selectedValue={selectedCity}
           onValueChange={(itemValue) => {
-            selectedCityRef.current = itemValue
-            forceUpdate()
+            setSelectedCity(itemValue)
           }}
           style={styles.picker}
-          enabled={selectedDepartmentRef.current !== ''}
+          enabled={selectedDepartment !== ''}
         >
           <Picker.Item label="Select City" value="" />
-          {getCityOptions(selectedDepartmentRef.current).map((cityName) => (
+          {getCityOptions(selectedDepartment).map((cityName) => (
             <Picker.Item key={cityName} label={cityName} value={cityName} />
           ))}
         </Picker>
