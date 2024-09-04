@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Text, View, Pressable, TextInput, Alert } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 
@@ -13,8 +13,12 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import { stylesPayment } from '../styles/PaymentStyles'
 
 const HelpAndSupport = ({ navigation }) => {
-  let requesType = 'queja'
-  let description = ''
+  const [requesType, setRequesType] = useState()
+  const [description, setDescription] = useState()
+
+  useEffect(()=> {
+    console.log(`description change: ${description}`)
+},[description])
 
   const handleSubmit = () => {
     if(description.length > 300){
@@ -22,6 +26,8 @@ const HelpAndSupport = ({ navigation }) => {
       return
     }
     Alert.alert(`Solicitud enviada\nTipo: ${requesType}\nDescripción: ${description}`)
+    setRequesType('')
+    setDescription('')
   }
 
   return (
@@ -49,7 +55,7 @@ const HelpAndSupport = ({ navigation }) => {
         <Picker 
           selectedValue={requesType}
           style={helpStyles.picker}
-          onValueChange={(itemValue) => requesType = itemValue}
+          onValueChange={(itemValue, itemIndex) => setRequesType(itemValue)}
         >
           <Picker.Item label='Queja' value='queja'/> 
           <Picker.Item label='Petición' value='peticion'/> 
@@ -62,7 +68,7 @@ const HelpAndSupport = ({ navigation }) => {
           placeholder="Descripción"
           maxLength={300}
           value={description}
-          onChangeText={description}
+          onChangeText={setDescription}
         />
         <Pressable onPress={handleSubmit} style={stylesPayment.pagarButton}>
           <Text>Enviar solicitud</Text>

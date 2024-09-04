@@ -32,7 +32,7 @@ const productsData = [
     name: "Freidora De Aire",
     image: freidora,
     description: "La Freidora de Aire IMUSA Easy Fry Deluxe 4,2L digital, te permite realizar recetas saludables para toda la familia, requiere poco o inclusive nada de aceite, para freir, asar y hornear todas tus comidas favoritas. Su capacidad de 4,2 litros te permitirá realizar hasta 6 porciones a la vez. Su pantalla táctil digital hace más óptimo y fácil la preparación de las recetas",
-    price: "$319.900",
+    price: "$319,900",
     status: "Delivered",
   },
   {
@@ -41,7 +41,7 @@ const productsData = [
     name: "Licuadora Imusa",
     image: licuadora,
     description: "Un electrodoméstico infaltable en tu casa. La licuadora Imusa Powermix Glass te ayudará a obtener resultados increíbles en todo lo que prepares, ya sea que quieras disfrutar de una bebida bien fría, de salsas y sopas, o de postres deliciosos. ¡Tenla siempre a mano!",
-    price: "$99.900",
+    price: "$99,900",
     
   },
   {
@@ -50,7 +50,7 @@ const productsData = [
     name: "Kit Maquina Para Sodas",
     image: kitSoda,
     description: "Maquina Para Hacer agua con gas y sodas con cilindro Co2. Haz tus refrescos de sodas de fácil y rápido.",
-    price: "$319.900",
+    price: "$319,900",
     
   },
   {
