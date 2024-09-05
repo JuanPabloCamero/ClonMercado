@@ -9,6 +9,19 @@ const Menu = ({navigation}) => {
             <Image source={require('../assets/logoMenu.png')} style={styles.Images}/>
         </View>
 
+        <Pressable style={styles.buttonMenu} onPress={() => navigation.navigate('Home')}>
+            <Text style={styles.buttonMenutText}>
+                Home
+            </Text>
+        </Pressable>
+
+        <Pressable style={styles.buttonMenu} onPress={() => navigation.navigate('Profile')}>
+            <Text style={styles.buttonMenutText}>
+                Profile
+            </Text>
+        </Pressable>
+        
+
         <Pressable style={styles.buttonMenu} onPress={() => navigation.navigate('ShoppingCart')}>
             <Text style={styles.buttonMenutText}>
                 Shopping cart
@@ -18,6 +31,12 @@ const Menu = ({navigation}) => {
         <Pressable style={styles.buttonMenu} onPress={() => navigation.navigate('ItemCategory')}>
             <Text style={styles.buttonMenutText}>
                 Item category
+            </Text>
+        </Pressable>
+
+        <Pressable style={styles.buttonMenu} onPress={() => navigation.navigate('ArticleDetails')}>
+            <Text style={styles.buttonMenutText}>
+                Article details
             </Text>
         </Pressable>
 
@@ -39,11 +58,6 @@ const Menu = ({navigation}) => {
             </Text>
         </Pressable>
 
-        <Pressable style={styles.buttonMenu} onPress={() => navigation.navigate('Profile')}>
-            <Text style={styles.buttonMenutText}>
-                Profile
-            </Text>
-        </Pressable>
 
         <Pressable style={styles.buttonMenu} onPress={() => navigation.navigate('HelpAndSupport')}>
             <Text style={styles.buttonMenutText}>

@@ -1,32 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import { 
-  View, 
-  FlatList, 
-  Text, 
-  Image, 
-  Pressable, 
-  TextInput 
-} from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { View, FlatList, Text, Image, Pressable, TextInput } from 'react-native';
 
 // Styles
-import { stylesCard } from '../styles/StylesCards'
-import { stylesCart } from '../styles/ShoppingCart'
-import { stylesPayment } from '../styles/PaymentStyles'
-import { styles } from '../styles/HomeStyles'
+import { stylesCard } from '../styles/StylesCards';
+import { stylesCart } from '../styles/ShoppingCart';
+import { stylesPayment } from '../styles/PaymentStyles';
+import { styles } from '../styles/HomeStyles';
 
 // Icons
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import AntDesign from 'react-native-vector-icons/AntDesign'
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const ShoppingCart = ({ route, navigation }) => {
-  const initialCartItems = route.params?.cartItems || []
-  const [cartItems, setCartItems] = useState(initialCartItems)
-  const [totalAmount, setTotalAmount] = useState(0)
+  const initialCartItems = route.params?.cartItems || [];
+  const [cartItems, setCartItems] = useState(initialCartItems);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
-    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-    setTotalAmount(total)
-  }, [cartItems])
+    const total = cartItems.reduce((sum, item) => sum + (parseFloat(item.price.replace(/[^\d.-]/g, '')) * item.quantity), 0);
+    setTotalAmount(total);
+  }, [cartItems]);
 
   const updateQuantity = (id, delta) => {
     setCartItems((prevItems) =>
@@ -37,10 +30,12 @@ const ShoppingCart = ({ route, navigation }) => {
   };
 
   const removeItem = (id) => {
-    const updatedCartItems = cartItems.filter((item) => item.id !== id)
-    setCartItems(updatedCartItems)
+    const updatedCartItems = cartItems.filter((item) => item.id !== id);
+    setCartItems(updatedCartItems);
+  };
 
-    navigation.setParams({ cartItems: updatedCartItems });
+  const handleCheckout = () => {
+    navigation.navigate('PaymentBranch', { cartItems });
   };
 
   const renderItem = ({ item }) => (
@@ -60,7 +55,7 @@ const ShoppingCart = ({ route, navigation }) => {
             keyboardType="numeric"
             onChangeText={(text) => {
               const newQuantity = parseInt(text) || 1;
-              updateQuantity(item.id, newQuantity - item.quantity)
+              updateQuantity(item.id, newQuantity - item.quantity);
             }}
           />
           <Pressable onPress={() => updateQuantity(item.id, 1)} style={stylesCart.quantityButton}>
@@ -98,14 +93,14 @@ const ShoppingCart = ({ route, navigation }) => {
         data={cartItems}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
-        ListFooterComponent={<Text style={stylesCart.total}>Total: ${totalAmount}</Text>}
+        ListFooterComponent={<Text style={stylesCart.total}>Total: ${totalAmount.toFixed(2)}</Text>}
       />
 
-      <Pressable onPress={() => alert('Proceeding to checkout')} style={stylesPayment.pagarButton}>
+      <Pressable onPress={handleCheckout} style={stylesPayment.pagarButton}>
         <Text>Proceed to checkout</Text>
       </Pressable>
     </View>
   );
 };
 
-export default ShoppingCart
+export default ShoppingCart;

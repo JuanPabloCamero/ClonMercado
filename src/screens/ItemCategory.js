@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Button, FlatList, Pressable, TextInput } from 'react-native'
+import { View, Text, Image, FlatList, Pressable, TextInput, StyleSheet } from 'react-native'
 import productsData from '../data/productsData'
 
 // Styles
@@ -11,10 +11,8 @@ import { stylesCategory } from '../styles/CategoryStyles'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
-// Definición de categorías
 const categories = Array.from(new Set(productsData.map(product => product.category)))
 
-// Función para filtrar productos por categoría
 const filterProductsByCategory = (category) => {
   return productsData.filter(product => product.category === category)
 }
@@ -22,12 +20,10 @@ const filterProductsByCategory = (category) => {
 const ItemCategory = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = React.useState(null)
 
-  // Manejo de selección de categoría
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
   }
 
-  // Productos a mostrar según la categoría seleccionada
   const displayProducts = selectedCategory ? filterProductsByCategory(selectedCategory) : productsData
 
   return (
@@ -56,20 +52,20 @@ const ItemCategory = ({ navigation }) => {
           data={categories}
           keyExtractor={(item) => item}
           renderItem={({ item }) => (
-            <View style={stylesCategory.buttonContainer}>
-              <Button
-                title={item}
-                onPress={() => handleCategorySelect(item)}
-              />
-            </View>
+            <Pressable
+              onPress={() => handleCategorySelect(item)}
+              style={[stylesCategory.buttonContainer, {backgroundColor: selectedCategory === item ? '#D2F0FA' : '#fff'}]}
+            >
+              <Text style={stylesCategory.buttonText}>{item}</Text>
+            </Pressable>
           )}
         />
-        <View style={stylesCategory.buttonContainer}>
-          <Button
-            title="Todos"
-            onPress={() => handleCategorySelect(null)}
-          />
-        </View>
+        <Pressable
+          onPress={() => handleCategorySelect(null)}
+          style={stylesCategory.buttonContainer}
+        >
+          <Text style={stylesCategory.buttonText}>Todos</Text>
+        </Pressable>
       </View>
 
       <FlatList
@@ -77,9 +73,10 @@ const ItemCategory = ({ navigation }) => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={stylesCategory.productItem}>
-            <Text>{item.name}</Text>
-            <Text>{item.description}</Text>
-            <Text>{item.price}</Text>
+            <Image source={item.image} style={stylesCategory.productImage} />
+            <Text style={stylesCategory.productName}>{item.name}</Text>
+            <Text style={stylesCategory.productDescription}>{item.description}</Text>
+            <Text style={stylesCategory.productPrice}>{item.price}</Text>
           </View>
         )}
         contentContainerStyle={stylesCategory.productList}
@@ -88,4 +85,4 @@ const ItemCategory = ({ navigation }) => {
   )
 }
 
-export default ItemCategory
+export default ItemCategory

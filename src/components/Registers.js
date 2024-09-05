@@ -130,7 +130,7 @@ const Registers = ({ navigation }) => {
         placeholder='Birthdate (YYYY-MM-DD)'
         value={birthdate}
         onChangeText={setBirthdate}
-        keyboardType='numeric'
+        keyboardType='date'
       />
 
       <TextInput

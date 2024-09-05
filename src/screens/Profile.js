@@ -1,11 +1,11 @@
-import React from 'react'
-import { Text, View, Image } from 'react-native'
+import React, { useState } from 'react'
+import { Text, View, Image, TextInput, Pressable, ScrollView } from 'react-native'
 import { stylesProfile } from '../styles/ProfileStyles'
 
-const userProfile = {
+const defaultProfile = {
   firstName: 'Juan Pablo',
   lastName: 'Camero',
-  dateOfBirth: '19/08/2004', 
+  dateOfBirth: '19/08/2004',
   photo: require('../assets/fotoPerfil.png'),
 }
 
@@ -19,26 +19,97 @@ const isAgeValid = (dob) => {
   const dayDiff = today.getDate() - birthDate.getDate()
 
   if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-    age--;
+    age--
   }
 
-  const ageValid = age >= 18 && age <= 50;  return ageValid
+  return age >= 18 && age <= 50
 }
 
 const Profile = () => {
-  const { firstName, lastName, dateOfBirth, photo } = userProfile
+  const [profiles, setProfiles] = useState([defaultProfile])
+  const [newProfile, setNewProfile] = useState({
+    firstName: '',
+    lastName: '',
+    dateOfBirth: '',
+    photo: require('../assets/fotoPerfil.png'), 
+  })
+
+  const handleAddProfile = () => {
+    if (newProfile.firstName && newProfile.lastName && newProfile.dateOfBirth) {
+      setProfiles([...profiles, newProfile])
+      setNewProfile({
+        firstName: '',
+        lastName: '',
+        dateOfBirth: '',
+        photo: require('../assets/fotoPerfil.png'),
+      })
+    }
+  }
+
+  const handleInputChange = (field, value) => {
+    setNewProfile({
+      ...newProfile,
+      [field]: value,
+    })
+  }
+
+  const handleDeleteProfile = (index) => {
+    const updatedProfiles = profiles.filter((_, i) => i !== index)
+    setProfiles(updatedProfiles)
+  }
 
   return (
     <View style={stylesProfile.container}>
-      <Image source={photo} style={stylesProfile.photo} />
-      <View style={stylesProfile.infoContainer}>
-        <Text style={stylesProfile.name}>{firstName} {lastName}</Text>
-        {isAgeValid(dateOfBirth) ? (
-          <Text style={stylesProfile.dob}>Date of Birth: {dateOfBirth}</Text>
-        ) : (
-          <Text style={stylesProfile.dob}>Date of Birth: Invalid</Text>
-        )}
-      </View>
+      <ScrollView>
+        {profiles.map((profile, index) => (
+          <View key={index} style={stylesProfile.profileCard}>
+            <Image source={profile.photo} style={stylesProfile.photo} />
+            <View style={stylesProfile.infoContainer}>
+              <Text style={stylesProfile.name}>
+                {profile.firstName} {profile.lastName}
+              </Text>
+              {isAgeValid(profile.dateOfBirth) ? (
+                <Text style={stylesProfile.dob}>Date of Birth: {profile.dateOfBirth}</Text>
+              ) : (
+                <Text style={stylesProfile.dob}>Date of Birth: Invalid</Text>
+              )}
+            </View>
+            <Pressable
+              style={stylesProfile.deleteButton}
+              onPress={() => handleDeleteProfile(index)}
+            >
+              <Text style={stylesProfile.deleteButtonText}>Delete</Text>
+            </Pressable>
+          </View>
+        ))}
+
+        <View style={stylesProfile.form}>
+          <TextInput
+            style={stylesProfile.input}
+            placeholder="First Name"
+            placeholderTextColor='white'
+            value={newProfile.firstName}
+            onChangeText={(value) => handleInputChange('firstName', value)}
+          />
+          <TextInput
+            style={stylesProfile.input}
+            placeholder="Last Name"
+            placeholderTextColor='white'
+            value={newProfile.lastName}
+            onChangeText={(value) => handleInputChange('lastName', value)}
+          />
+          <TextInput
+            style={stylesProfile.input}
+            placeholder="Date of Birth (dd/mm/yyyy)"
+            placeholderTextColor='white'
+            value={newProfile.dateOfBirth}
+            onChangeText={(value) => handleInputChange('dateOfBirth', value)}
+          />
+          <Pressable onPress={handleAddProfile} style={stylesProfile.deleteButton}>
+            <Text style={stylesProfile.deleteButtonText}>Add new user</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
     </View>
   )
 }

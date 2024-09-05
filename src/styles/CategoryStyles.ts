@@ -4,24 +4,57 @@ export const stylesCategory = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    backgroundColor:'#D2F0FA'
   },
   menu: {
-    marginBottom: 10,
+    flexDirection: 'row',
+    marginVertical: 10,
   },
   buttonContainer: {
-    marginRight: 10,
-    paddingVertical: 5,
+    marginHorizontal: 5,
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#5F2EEA',
+    backgroundColor: '#D2F0FA'
   },
-  productList: {
-    flexGrow: 1,
-  },
-  productListContainer: {
-    flex: 1,
+  buttonText: {
+    fontSize: 16,
+    fontWeight:'bold',
+    color: '#5F2EEA',
   },
   productItem: {
-    marginBottom: 10,
+    flex: 1,
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    marginBottom: 10,
+    backgroundColor: '#D2F0FA',
+    borderRadius: 10,
+    shadowColor: '#D2F0FA',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
+  productImage: {
+    width: '90%',
+    height: 380,
+    borderRadius: 10,
+  },
+  productName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginVertical: 5,
+  },
+  productDescription: {
+    fontSize: 14,
+    color: '#666',
+  },
+  productPrice: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 5,
+  },
+  productList: {
+    paddingBottom: 20,
+  },
 })
