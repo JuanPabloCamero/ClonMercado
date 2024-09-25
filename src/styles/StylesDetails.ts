@@ -4,7 +4,7 @@ export const stylesDetails = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
   },
   header: {
     flexDirection: 'row',
@@ -18,6 +18,7 @@ export const stylesDetails = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
+    marginRight:100
   },
   itemContainer: {
     flexDirection: 'row',
@@ -35,19 +36,32 @@ export const stylesDetails = StyleSheet.create({
   name: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#000',
+    marginBottom:5
   },
   description: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 8,
+    fontSize: 16,
+    color: '#000',
+    marginBottom: 20,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 4,
-    padding: 8,
-    marginBottom: 16,
+    borderWidth: 2,
+    borderColor: '#000',
+    borderRadius: 50,
+    padding: 10,
+    margin:43,
+    marginBottom: 30,
+    backgroundColor: '#fff',
+    marginRight:50,
+    marginLeft:3
+  },
+  input2: {
+    borderWidth: 2,
+    borderColor: '#000',
+    borderRadius: 50,
+    padding: 10,
+    margin:10,
+    marginBottom: 30,
     backgroundColor: '#fff',
   },
   picker: {
@@ -58,14 +72,16 @@ export const stylesDetails = StyleSheet.create({
     marginBottom: 16,
   },
   button: {
-    backgroundColor: '#007bff',
-    padding: 12,
-    borderRadius: 4,
+    width: '80%',
+    height: 50,
+    backgroundColor: '#D2F0FA',
+    borderRadius: 50,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom:50
   },
   buttonText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 16,
   },
   questionsContainer: {
@@ -75,6 +91,20 @@ export const stylesDetails = StyleSheet.create({
     marginBottom: 16,
   },
   ratingContainer: {
-    marginTop: 16,
+    marginTop: 5,
+    alignItems: 'center',
+    marginRight:70,
   },
+  starsRow: {
+    flexDirection: 'row', 
+    marginVertical: 10,
+  },
+  container2:{
+    marginTop:15,
+    marginRight:60
+  },
+  text:{
+    color:'#000',
+    fontSize: 17
+  }
 })
