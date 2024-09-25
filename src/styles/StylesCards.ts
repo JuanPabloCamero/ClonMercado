@@ -4,7 +4,7 @@ export const stylesCard = StyleSheet.create({
   container: {
     flex: 1,
       backgroundColor: '#fff',
-      marginBottom: 100,
+      marginBottom: 15,
   },
   cardContainer: {
     borderRadius: 10,

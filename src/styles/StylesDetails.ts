@@ -23,6 +23,12 @@ export const stylesDetails = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
     marginBottom: 16,
+    backgroundColor: '#D2F0FA', 
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    borderRadius: 10,
+    paddingTop:16,
   },
   image: {
     width: 100,
@@ -74,7 +80,7 @@ export const stylesDetails = StyleSheet.create({
   button: {
     width: '80%',
     height: 50,
-    backgroundColor: '#D2F0FA',
+    backgroundColor: '#3E53F7',
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',

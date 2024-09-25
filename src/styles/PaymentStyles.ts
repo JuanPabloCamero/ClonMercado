@@ -3,7 +3,8 @@ import {StyleSheet} from 'react-native'
 export const stylesPayment = StyleSheet.create({
   container: {
     flex: 1,
-    alignContent:'center'
+    alignContent:'center',
+    
   },
   title: {
     fontSize: 20,
@@ -16,7 +17,7 @@ export const stylesPayment = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
     marginBottom: 20,
-    marginLeft:20
+    marginLeft:20,
   },
   thumbnail: {
     width: 80,
@@ -45,6 +46,7 @@ export const stylesPayment = StyleSheet.create({
     height: 50,
     width: '100%',
     marginVertical: 10,
+
   },
   containerPagar:{
     alignContent:'center',
@@ -58,17 +60,21 @@ export const stylesPayment = StyleSheet.create({
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:50
+    marginBottom:50,
+    marginTop:50,
   },
   formContainer: {
     marginTop: 16,
   },
   container2: {
     padding:20,
-    marginBottom:110
+    marginBottom:11
   },
   text:{
     color:'black',
     fontWeight: 'bold'
   },
+  flat:{
+    paddingBottom:200
+  },
 })
