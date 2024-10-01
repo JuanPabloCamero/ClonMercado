@@ -1,9 +1,9 @@
 import React from 'react'
-import StackNavigation from './src/navigation/StackNavigation'
+import StackNavigator from './src/navigation/StackNavigation'
 
 const App = () => {
   return(
-    <StackNavigation/>
+    <StackNavigator/>
   )
 }
 

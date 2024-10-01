@@ -1,42 +1,41 @@
-import React, {useState, useEffect} from 'react'
-import { Alert, Text, View, TextInput,Pressable,Image,} from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import { styles } from '../styles/GlobalStyles'
+import React, { useState, useContext } from 'react';
+import { Alert, Text, View, TextInput, Pressable, Image } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { styles } from '../styles/GlobalStyles';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = ({ navigation }) => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-
-    useEffect(()=> {
-        console.log(`username change: ${username}`)
-    },[username])
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const { dispatch } = useContext(AuthContext); 
 
     const validateUsername = (username) => {
-        return username.length <= 10
-    }
+        return username.length <= 10;
+    };
 
     const validatePassword = (password) => {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-        return passwordRegex.test(password)
-    }
+        return passwordRegex.test(password);
+    };
 
     const handleLogin = () => {
         if (!validateUsername(username)) {
-            Alert.alert('Error', 'El nombre del usuario debe contener máximo 10 caracteres')
-            return
+            Alert.alert('Error', 'El nombre del usuario debe contener máximo 10 caracteres');
+            return;
         }
 
         if (!validatePassword(password)) {
-            Alert.alert('Error', 'La contraseña debe tener al menos 8 caracteres, incluyendo letras mayúsculas, minúsculas, números y caracteres especiales')
-            return
+            Alert.alert('Error', 'La contraseña debe tener al menos 8 caracteres, incluyendo letras mayúsculas, minúsculas, números y caracteres especiales');
+            return;
         }
 
-        Alert.alert('Inicio de sesión exitoso', `Bienvenido ${username}`)
-        navigation.navigate('Home')
-        setUsername('')
-        setPassword('')
+        dispatch({ type: 'LOGIN', payload: { username } }); 
 
-    }
+        Alert.alert('Inicio de sesión exitoso', `Bienvenido ${username}`);
+        navigation.navigate('Home');
+        setUsername('');
+        setPassword('');
+    };
 
     return (
         <View style={styles.container}>
@@ -47,7 +46,7 @@ const Login = ({ navigation }) => {
             <TextInput
                 style={styles.input}
                 placeholder="Username"
-                defaultValue={username}
+                value={username}
                 onChangeText={setUsername}
                 maxLength={10}
                 autoCapitalize="none"
@@ -57,7 +56,7 @@ const Login = ({ navigation }) => {
                 <TextInput
                     style={styles.passwordInput}
                     placeholder="Password"
-                    defaultValue={password}
+                    value={password}
                     onChangeText={setPassword}
                     secureTextEntry
                     maxLength={8}
@@ -73,7 +72,7 @@ const Login = ({ navigation }) => {
                 <Text style={styles.registerText}>Register new user</Text>
             </Pressable>
         </View>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

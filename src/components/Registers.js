@@ -1,8 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useContext } from 'react'
 import { View, Text, Alert, TextInput, Pressable, Image } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import { styles } from '../styles/GlobalStyles'
 import { colombiaData } from '../data/colombiaData'
+import { AuthContext } from '../context/AuthContext'
 
 const Registers = ({ navigation }) => {
   const [username, setUsername] = useState('')
@@ -12,6 +13,8 @@ const Registers = ({ navigation }) => {
   const [address, setAddress] = useState('')
   const [selectedDepartment, setSelectedDepartment] = useState('')
   const [selectedCity, setSelectedCity] = useState('')
+
+  const {dispatch} =  useContext(AuthContext)
 
   const emailRef = useRef('')
   const departments = Object.keys(colombiaData)
@@ -78,6 +81,17 @@ const Registers = ({ navigation }) => {
       Alert.alert('Error', 'Debes seleccionar un departamento y ciudad')
       return
     }
+
+    dispatch({
+      type: 'LOGIN', 
+      payload: {
+        username,
+        email,
+        department: selectedDepartment,
+        city: selectedCity,
+        address,
+      }
+    })
 
     Alert.alert('Registro exitoso', `${username}`)
     navigation.navigate('Login')
