@@ -62,6 +62,7 @@ export const stylesPayment = StyleSheet.create({
     alignItems: 'center',
     marginBottom:50,
     marginTop:50,
+    marginLeft: 30,
   },
   formContainer: {
     marginTop: 16,

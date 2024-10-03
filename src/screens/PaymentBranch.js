@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+
 import { 
   View,
   Text,
@@ -8,6 +9,7 @@ import {
   FlatList 
 } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
+import { AuthContext } from '../context/AuthContext'
 
 // Styles
 import { styles } from '../styles/HomeStyles'
@@ -21,10 +23,15 @@ import { ScrollView } from 'react-native-gesture-handler'
 const PaymentBranch = (props) => {
   const { route, navigation } = props;
   const { product, cartItems } = route.params || {}
+  const {state, dispatch} = useContext(AuthContext)
 
-  const [address, setAddress] = useState('')
-  const [paymentMethod, setPaymentMethod] = useState('PSE')
-  const [selectedBank, setSelectedBank] = useState('Bank1')
+  const [address, setAddress] = useState(state.address || ' ')
+  const [paymentMethod, setPaymentMethod] = useState(state.paymentMethod || 'PSE')
+  const [selectedBank, setSelectedBank] = useState(state.selectedBank || 'Bank1')
+
+  useEffect(()=>{
+   console.log('Estado actualizado: ', state ) 
+  }, [state])
 
   const items = cartItems || (product ? [product] : [])
 
@@ -34,8 +41,24 @@ const PaymentBranch = (props) => {
 
   const handlePayment = () => {
     alert('Simulando el pago...')
+    dispatch({type: 'RESET_PAYMENT'})
     navigation.navigate('Home', { clearCart: true })
   };
+
+  const handleAddress =(text) =>{
+    setAddress(text)
+    dispatch({type: 'SET_ADDRESS', payload:text})
+  };
+
+  const handlePaymentMethod = (value) =>{
+    setPaymentMethod(value)
+    dispatch({type: 'SET_PAYMENT_METHOD', payload:value})
+  };
+
+  const handleBank = (value) =>{
+    setSelectedBank(value)
+    dispatch({type: 'SET_SELECTED_BANK', payload:value})
+  }
 
   const totalValue = items.reduce((sum, item) => sum + (parseFloat(item.price.replace(/[^\d.-]/g, '')) * (item.quantity || 1)), 0)
 
@@ -89,14 +112,14 @@ const PaymentBranch = (props) => {
             style={stylesPayment.input}
             value={address}
             maxLength={30}
-            onChangeText={setAddress}
+            onChangeText={handleAddress}
           />
 
           <Text style={stylesPayment.text}>Forma de Pago:</Text>
           <Picker
             selectedValue={paymentMethod}
             style={stylesPayment.picker}
-            onValueChange={(itemValue) => setPaymentMethod(itemValue)}
+            onValueChange={handlePaymentMethod}
           >
             <Picker.Item label="PSE" value="PSE"/>
             <Picker.Item label="Tarjeta de crédito" value="credit_card" />
@@ -109,7 +132,7 @@ const PaymentBranch = (props) => {
               <Picker
                 selectedValue={selectedBank}
                 style={stylesPayment.picker}
-                onValueChange={(itemValue) => setSelectedBank(itemValue)}
+                onChangeValue={handleBank}
               >
                 <Picker.Item label="Bancolombia" value="Bank1" />
                 <Picker.Item label="Daviplata" value="Bank2" />
@@ -122,12 +145,14 @@ const PaymentBranch = (props) => {
 
               {selectedBank === 'Bank1' && (
                 <View style={stylesPayment.formContainer}>
-                  <Text style={stylesPayment.text}>Formulario Banco:</Text>
+                  <Text style={stylesPayment.text}>Formulario Banco</Text>
+                  <Text style={stylesPayment.text}>Número de cuenta:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
                     maxLength={20}
                   />
+                  <Text style={stylesPayment.text}>Nombre del titular:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Nombre del Titular"

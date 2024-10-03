@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, FlatList, Text, Image, Pressable, TextInput } from 'react-native';
+import { AuthContext } from '../context/AuthContext';
 
 // Styles
 import { stylesCard } from '../styles/StylesCards';
@@ -11,31 +12,27 @@ import { styles } from '../styles/HomeStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const ShoppingCart = ({ route, navigation }) => {
-  const initialCartItems = route.params?.cartItems || [];
-  const [cartItems, setCartItems] = useState(initialCartItems);
+const ShoppingCart = ({ navigation }) => {
+  const { state, dispatch } = useContext(AuthContext);
   const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
-    const total = cartItems.reduce((sum, item) => sum + (parseFloat(item.price.replace(/[^\d.-]/g, '')) * item.quantity), 0);
+    console.log('Estado actualizado:', state)
+    const total = state.cartItems.reduce((sum, item) => sum + (parseFloat(item.price.replace(/[^\d.-]/g, '')) * item.quantity), 0);
     setTotalAmount(total);
-  }, [cartItems]);
+  }, [state.cartItems]);
 
   const updateQuantity = (id, delta) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: Math.max(item.quantity + delta, 1) } : item
-      )
-    );
+    dispatch({ type: 'UPDATE_ITEM_QUANTITY', payload: { id, delta } });
   };
 
   const removeItem = (id) => {
-    const updatedCartItems = cartItems.filter((item) => item.id !== id);
-    setCartItems(updatedCartItems);
+    dispatch({ type: 'REMOVE_ITEM_FROM_CART', payload: id });
   };
 
   const handleCheckout = () => {
-    navigation.navigate('PaymentBranch', { cartItems });
+    navigation.navigate('PaymentBranch', { cartItems: state.cartItems });
+    dispatch({ type: 'CLEAR_CART' });
   };
 
   const renderItem = ({ item }) => (
@@ -90,7 +87,7 @@ const ShoppingCart = ({ route, navigation }) => {
       </View>
 
       <FlatList
-        data={cartItems}
+        data={state.cartItems}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         ListFooterComponent={<Text style={stylesCart.total}>Total: ${totalAmount.toFixed(2)}</Text>}

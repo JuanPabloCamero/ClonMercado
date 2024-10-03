@@ -1,33 +1,25 @@
-import React from 'react'
-import { Text, View, Pressable, TextInput, Image, FlatList } from 'react-native'
-import productsData from '../data/productsData'
+// MyFavorites.js
+import React, { useContext } from 'react';
+import { Text, View, Pressable, Image, FlatList, TextInput } from 'react-native';
+import { FavoritesContext } from '../context/FavoritesContext'; 
+import { styles } from '../styles/HomeStyles';
+import { stylesCard } from '../styles/StylesCards';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-//Styles
-import {styles} from '../styles/HomeStyles'
-import {stylesCard} from '../styles/StylesCards'
+const MyFavorites = ({ navigation }) => {
+  const { state } = useContext(FavoritesContext); 
 
-// Iconos
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-
-const MyFavorites = ({navigation}) => {
-  const filterProduct = productsData.filter((_,index) => index % 5 === 0)
-
-  const getStatus = (index) => {
-    const statusOptions = ['Available', 'Unavailable'];
-    return statusOptions[index % statusOptions.length];
-  };
-
-  const renderItem = ({item, index}) => (
+  const renderItem = ({ item }) => (
     <View style={stylesCard.Card}>
-      <Image source={item.image} style={styles.Images}/>
+      <Image source={item.image} style={styles.Images} />
       <View style={stylesCard.productInfo}>
         <Text style={styles.name}>{item.name}</Text>
         <Text style={styles.description}>{item.description}</Text>
-        <Text style={styles.status}>Status: {getStatus(index)}</Text>
+        <Text style={styles.status}>Status: Available</Text>
       </View>
     </View>
-  )
+  );
 
   return (
     <View style={stylesCard.container}>
@@ -50,13 +42,12 @@ const MyFavorites = ({navigation}) => {
       </View>
 
       <FlatList
-        data={filterProduct}
+        data={state.favoriteItems} 
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
       />
     </View>
-  )
-}
+  );
+};
 
-export default MyFavorites
-
+export default MyFavorites;

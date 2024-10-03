@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { View, TextInput, Pressable, Text, FlatList, Image, Alert } from 'react-native';
 import { styles } from '../styles/HomeStyles';
 import { stylesCard } from '../styles/StylesCards';
 import productsData from '../data/productsData';
+import { AuthContext } from '../context/AuthContext'; 
+import { FavoritesContext } from '../context/FavoritesContext'; 
 
 // Icons
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const Home = ({ navigation }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const { dispatch } = useContext(AuthContext); 
+  const { state: favoritesState, dispatch: favoritesDispatch } = useContext(FavoritesContext); 
 
   const handleProductPress = (item) => {
     Alert.alert(
@@ -19,6 +22,10 @@ const Home = ({ navigation }) => {
         {
           text: 'Agregar al carrito',
           onPress: () => addProductToCart(item),
+        },
+        {
+          text: isFavorite(item) ? 'Eliminar de Favoritos' : 'Agregar a Favoritos',
+          onPress: () => toggleFavorite(item),
         },
         {
           text: 'Pagar',
@@ -33,17 +40,20 @@ const Home = ({ navigation }) => {
     );
   };
 
+  const isFavorite = (product) => {
+    return favoritesState.favoriteItems.some(item => item.id === product.id);
+  };
+
+  const toggleFavorite = (product) => {
+    if (isFavorite(product)) {
+      favoritesDispatch({ type: 'REMOVE_FAVORITE', payload: product.id }); 
+    } else {
+      favoritesDispatch({ type: 'ADD_FAVORITE', payload: product }); 
+    }
+  };
+
   const addProductToCart = (product) => {
-    setCartItems((prevItems) => {
-      const existingItemIndex = prevItems.findIndex((item) => item.id === product.id);
-      if (existingItemIndex >= 0) {
-        const updatedItems = [...prevItems];
-        updatedItems[existingItemIndex].quantity += 1;
-        return updatedItems;
-      } else {
-        return [...prevItems, { ...product, quantity: 1 }];
-      }
-    });
+    dispatch({ type: 'ADD_ITEM_TO_CART', payload: { ...product, quantity: 1 } }); 
   };
 
   return (
@@ -61,7 +71,7 @@ const Home = ({ navigation }) => {
           />
         </View>
 
-        <Pressable onPress={() => navigation.navigate('ShoppingCart', { cartItems })}>
+        <Pressable onPress={() => navigation.navigate('ShoppingCart')}>
           <AntDesign name="shoppingcart" size={30} color="black" />
         </Pressable>
       </View>
@@ -74,6 +84,9 @@ const Home = ({ navigation }) => {
               <View style={stylesCard.Card}>
                 <View style={stylesCard.cardHeader}>
                   <Image source={item.image} style={styles.Images} />
+                  {isFavorite(item) && (
+                    <Ionicons name="star" size={20} color="gold" style={{ position: 'absolute', top: 5, left: 250 }} />
+                  )}
                 </View>
                 <View style={stylesCard.productInfo}>
                   <Text style={stylesCard.productName}>{item.name}</Text>
