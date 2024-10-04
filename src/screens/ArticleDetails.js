@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Text, View, Pressable, TextInput, Image, FlatList, ScrollView } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { Text, View, Pressable, TextInput, Image, FlatList, ScrollView, Alert } from 'react-native';
 import descriptionProductData from '../data/descriptionProductData';
+import { QuestionsContext } from '../context/QuestionContext';
 
 // Styles
 import { stylesCard } from '../styles/StylesCards';
@@ -13,20 +14,23 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const ArticleDetails = ({ navigation }) => {
+  const { state, dispatch } = useContext(QuestionsContext);
   const [question, setQuestion] = useState('');
   const [ratingData, setRatingData] = useState({});
-  const [questions, setQuestions] = useState({});
-  const [comments, setComments] = useState({});
 
   const handleAddQuestion = (productId) => {
+    if (!question) {
+      Alert.alert('Error', 'No puedes enviar una pregunta vacía');
+      return;
+    }
     if (question.length <= 100) {
-      setQuestions(prevQuestions => ({
-        ...prevQuestions,
-        [productId]: [...(prevQuestions[productId] || []), question]
-      }));
+      dispatch({
+        type: 'ADD_QUESTION',
+        payload: { productId, question },
+      });
       setQuestion('');
     } else {
-      alert('La pregunta debe contener máximo 100 caracteres');
+      Alert.alert('Error', 'La pregunta debe contener máximo 100 caracteres');
     }
   };
 
@@ -35,36 +39,33 @@ const ArticleDetails = ({ navigation }) => {
     const productRatingComment = ratingData[productId]?.comment;
 
     if (productRating && productRatingComment.length <= 200) {
-      setComments(prevComments => ({
-        ...prevComments,
-        [productId]: [
-          ...(prevComments[productId] || []),
-          { rating: productRating, comment: productRatingComment }
-        ]
-      }));
-      alert('Calificación enviada');
+      dispatch({
+        type: 'ADD_COMMENT',
+        payload: { productId, comment: { rating: productRating, comment: productRatingComment } },
+      });
+      Alert.alert('Éxito', 'Calificación enviada');
     } else {
-      alert('Por favor califique el producto y escriba un comentario válido');
+      Alert.alert('Error', 'Por favor califique el producto y escriba un comentario válido');
     }
   };
 
   const handleSetRating = (productId, star) => {
-    setRatingData(prevData => ({
+    setRatingData((prevData) => ({
       ...prevData,
       [productId]: {
         ...prevData[productId],
-        rating: star
-      }
+        rating: star,
+      },
     }));
   };
 
   const handleSetRatingComment = (productId, comment) => {
-    setRatingData(prevData => ({
+    setRatingData((prevData) => ({
       ...prevData,
       [productId]: {
         ...prevData[productId],
-        comment
-      }
+        comment,
+      },
     }));
   };
 
@@ -101,7 +102,8 @@ const ArticleDetails = ({ navigation }) => {
         renderItem={({ item: product }) => {
           const productRating = ratingData[product.id]?.rating || 0;
           const productRatingComment = ratingData[product.id]?.comment || '';
-          const productComments = comments[product.id] || [];
+          const productQuestions = state.questions[product.id] || [];
+          const productComments = state.comments[product.id] || [];
 
           return (
             <View style={stylesDetails.container}>
@@ -114,10 +116,9 @@ const ArticleDetails = ({ navigation }) => {
                       <Text style={stylesDetails.description}>{product.description}</Text>
                       <Text style={stylesDetails.name}>Valor:</Text>
                       <Text style={stylesDetails.description}>{product.price}</Text>
-                      <Text style={stylesDetails.name}>Características:</Text>
                       <Text>{product.features}</Text>
                       <Text style={stylesDetails.name}>Medios de pago:</Text>
-                      <Text style={stylesDetails.description}>{product.paymentMethods.join(', ')}</Text>
+                      <Text style={stylesDetails.description}>{product.paymentMethods}</Text>
                     </View>
 
                     <View style={stylesDetails.questionsContainer}>
@@ -135,7 +136,7 @@ const ArticleDetails = ({ navigation }) => {
                       </Pressable>
 
                       <FlatList
-                        data={questions[product.id] || []}
+                        data={productQuestions}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) => <Text>{item}</Text>}
                       />

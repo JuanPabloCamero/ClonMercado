@@ -1,67 +1,64 @@
-import React, { useState } from 'react'
-import { Text, View, Image, TextInput, Pressable, ScrollView } from 'react-native'
-import { stylesProfile } from '../styles/ProfileStyles'
-
-const defaultProfile = {
-  firstName: 'Juan Pablo',
-  lastName: 'Camero',
-  dateOfBirth: '19/08/2004',
-  photo: require('../assets/fotoPerfil.png'),
-}
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View, Image, TextInput, Pressable, ScrollView } from 'react-native';
+import { stylesProfile } from '../styles/ProfileStyles';
+import { ProfileContext } from '../context/ProfileContext';
 
 const isAgeValid = (dob) => {
-  const [day, month, year] = dob.split('/').map(Number)
-  const birthDate = new Date(year, month - 1, day)
-  const today = new Date()
-  let age = today.getFullYear() - birthDate.getFullYear()
+  const [day, month, year] = dob.split('/').map(Number);
+  const birthDate = new Date(year, month - 1, day);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
 
-  const monthDiff = today.getMonth() - birthDate.getMonth()
-  const dayDiff = today.getDate() - birthDate.getDate()
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  const dayDiff = today.getDate() - birthDate.getDate();
 
   if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-    age--
+    age--;
   }
 
-  return age >= 18 && age <= 50
-}
+  return age >= 18 && age <= 50;
+};
 
 const Profile = () => {
-  const [profiles, setProfiles] = useState([defaultProfile])
+  const { state, dispatch } = useContext(ProfileContext);
   const [newProfile, setNewProfile] = useState({
     firstName: '',
     lastName: '',
     dateOfBirth: '',
-    photo: require('../assets/fotoPerfil.png'), 
-  })
+    photo: require('../assets/fotoPerfil.png'),
+  });
+
+  useEffect(()=>{
+    console.log('Estado actualiazado', state)
+  },[state])
 
   const handleAddProfile = () => {
     if (newProfile.firstName && newProfile.lastName && newProfile.dateOfBirth) {
-      setProfiles([...profiles, newProfile])
+      dispatch({ type: 'ADD_PROFILE', payload: newProfile });
       setNewProfile({
         firstName: '',
         lastName: '',
         dateOfBirth: '',
         photo: require('../assets/fotoPerfil.png'),
-      })
+      });
     }
-  }
+  };
 
   const handleInputChange = (field, value) => {
     setNewProfile({
       ...newProfile,
       [field]: value,
-    })
-  }
+    });
+  };
 
   const handleDeleteProfile = (index) => {
-    const updatedProfiles = profiles.filter((_, i) => i !== index)
-    setProfiles(updatedProfiles)
-  }
+    dispatch({ type: 'DELETE_PROFILE', payload: index });
+  };
 
   return (
     <View style={stylesProfile.container}>
       <ScrollView>
-        {profiles.map((profile, index) => (
+        {state.profiles.map((profile, index) => (
           <View key={index} style={stylesProfile.profileCard}>
             <Image source={profile.photo} style={stylesProfile.photo} />
             <View style={stylesProfile.infoContainer}>
@@ -111,7 +108,7 @@ const Profile = () => {
         </View>
       </ScrollView>
     </View>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

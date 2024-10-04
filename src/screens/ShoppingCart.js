@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, FlatList, Text, Image, Pressable, TextInput } from 'react-native';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../context/AuthContext'; 
+
 
 // Styles
 import { stylesCard } from '../styles/StylesCards';

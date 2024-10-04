@@ -6,7 +6,8 @@ import {
   TextInput, 
   Image, 
   Pressable, 
-  FlatList 
+  FlatList,
+  Alert 
 } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import { AuthContext } from '../context/AuthContext'
@@ -40,7 +41,11 @@ const PaymentBranch = (props) => {
   }
 
   const handlePayment = () => {
-    alert('Simulando el pago...')
+    Alert.alert('Felicidades', 'su compra fue exitosa')
+
+    items.forEach(item => {
+      dispatch({type: 'ADD_ITEM_TO_CART', payload:{...item, status: 'Comprado'}})
+    })
     dispatch({type: 'RESET_PAYMENT'})
     navigation.navigate('Home', { clearCart: true })
   };

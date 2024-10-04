@@ -6,7 +6,7 @@ export const stylesProfile = StyleSheet.create ({
     flex: 1,
     padding: 20,
     alignItems: 'center',
-    backgroundColor: '#5F2EEA',
+    backgroundColor: '#3E53F7',
     alignContent: 'center'
   },
   profileCard: {

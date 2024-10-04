@@ -1,28 +1,29 @@
-import React from 'react'
-import { Text, View, Pressable, TextInput, Image, FlatList } from 'react-native'
-import productsData from '../data/productsData'
+import React, { useContext } from 'react';
+import { Text, View, Pressable, TextInput, Image, FlatList } from 'react-native';
+import { AuthContext } from '../context/AuthContext'; 
 
-//Styles
-import {styles} from '../styles/HomeStyles'
-import {stylesCard} from '../styles/StylesCards'
+// Styles
+import { styles } from '../styles/HomeStyles';
+import { stylesCard } from '../styles/StylesCards';
 
 // Iconos
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import AntDesign from 'react-native-vector-icons/AntDesign'
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const MyShoppings = ({navigation}) => {
-  const filterShoppings = productsData.filter((_,index) => index % 5 === 0)
+const MyShoppings = ({ navigation }) => {
+  const { state } = useContext(AuthContext); 
+  const { cartItems } = state;
 
-  const renderItem = ({item}) => (
+  const renderItem = ({ item }) => (
     <View style={stylesCard.Card}>
-      <Image source={item.image} style={styles.Images}/>
+      <Image source={item.image} style={styles.Images} />
       <View style={stylesCard.productInfo}>
         <Text style={styles.name}>{item.name}</Text>
         <Text style={styles.description}>{item.description}</Text>
         <Text style={styles.status}>Status: {item.status}</Text>
       </View>
     </View>
-  )
+  );
 
   return (
     <View style={stylesCard.container}>
@@ -45,12 +46,12 @@ const MyShoppings = ({navigation}) => {
       </View>
 
       <FlatList
-        data={filterShoppings}
+        data={cartItems} 
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
       />
     </View>
-  )
+  );
 }
 
-export default MyShoppings
+export default MyShoppings;
