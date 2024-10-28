@@ -44,6 +44,7 @@ export const stylesCategory = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginVertical: 5,
+    color:'#000'
   },
   productDescription: {
     fontSize: 14,
@@ -53,6 +54,7 @@ export const stylesCategory = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginTop: 5,
+    color:'#000'
   },
   productList: {
     paddingBottom: 20,

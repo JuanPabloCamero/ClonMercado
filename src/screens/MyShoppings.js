@@ -18,9 +18,9 @@ const MyShoppings = ({ navigation }) => {
     <View style={stylesCard.Card}>
       <Image source={item.image} style={styles.Images} />
       <View style={stylesCard.productInfo}>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-        <Text style={styles.status}>Status: {item.status}</Text>
+        <Text style={stylesCard.productName}>{item.name}</Text>
+        <Text style={stylesCard.productInfo}>{item.description}</Text>
+        <Text style={stylesCard.productName}>Status: {item.status}</Text>
       </View>
     </View>
   );
@@ -37,6 +37,7 @@ const MyShoppings = ({ navigation }) => {
           <TextInput
             style={styles.searchInput}
             placeholder="Buscar en Mercado Libre"
+            placeholderTextColor={'#000'}
           />
         </View>
 

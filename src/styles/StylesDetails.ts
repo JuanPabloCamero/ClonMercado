@@ -69,6 +69,7 @@ export const stylesDetails = StyleSheet.create({
     margin:10,
     marginBottom: 30,
     backgroundColor: '#fff',
+    color:'#000'
   },
   picker: {
     borderWidth: 1,

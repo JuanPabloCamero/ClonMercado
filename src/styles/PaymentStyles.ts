@@ -26,26 +26,31 @@ export const stylesPayment = StyleSheet.create({
   },
   infoContainer: {
     flex: 1,
+    color: '#000'
   },
   name: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#000'
+
   },
   description: {
     fontSize: 14,
-    color: '#666',
+    color: '#000',
   },
   input: {
     borderWidth: 2,
     borderColor: '#3E53F7',
     padding: 10,
     marginVertical: 10,
-    borderRadius:25
+    borderRadius:25,
+    color:'#000'
   },
   picker: {
     height: 50,
     width: '100%',
     marginVertical: 10,
+    color:'#000'
 
   },
   containerPagar:{
@@ -63,6 +68,8 @@ export const stylesPayment = StyleSheet.create({
     marginBottom:50,
     marginTop:50,
     marginLeft: 30,
+    color: '#000'
+
   },
   formContainer: {
     marginTop: 16,
@@ -78,4 +85,8 @@ export const stylesPayment = StyleSheet.create({
   flat:{
     paddingBottom:200
   },
+  price:{
+    fontWeight: 'bold',
+    color:'#000'
+  }
 })

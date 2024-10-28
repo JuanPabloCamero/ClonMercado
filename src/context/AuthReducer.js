@@ -5,22 +5,39 @@ export const initialState = {
     selectBank: null,
     address: '',
     cartItems: [],
+    registeredUsers:[],
 };
 
 export const AuthReducer = (state, action) =>{
     switch (action.type) {
         case 'LOGIN':
-          return {
-            ...state,
-            isAuthenticated: true,
-            user: action.payload,
-        }
+            return {
+                ...state,
+                isAuthenticated: true,
+                user: action.payload,
+            };
         case 'LOGOUT':
-          return {
-            ...state,
-            isAuthenticated: false,
-            user: null,
-        }
+            return {
+                ...state,
+                isAuthenticated: false,
+                user: null,
+            };
+        case 'REGISTER_USER':
+            return {
+                ...state,
+                registeredUsers: [
+                    ...state.registeredUsers,
+                    {
+                        usuario: action.payload.usuario,
+                        contraseña: action.payload.contraseña,
+                        correo: action.payload.correo,
+                        fechaNacimiento: action.payload.fechaNacimiento, 
+                        departamento: action.payload.departamento,
+                        ciudad: action.payload.ciudad,
+                        direccion: action.payload.direccion,
+                    },
+                ],
+            };
         case 'SET_PAYMENT_METHOD':
             return {
                ...state,

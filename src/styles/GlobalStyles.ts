@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 20,
         marginBottom: 20,
+        color: '#000'
     },
 
     pickerContainer: {
@@ -63,6 +64,7 @@ export const styles = StyleSheet.create({
       
     passwordInput: {
         flex: 1,
+        color: '#000'
     },
     
     forgotPassword: {

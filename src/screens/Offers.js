@@ -22,10 +22,10 @@ const renderItem = ({item}) => (
   <View style={stylesCard.Card}>
     <Image source={item.image} style={styles.Images}/>
     <View style={stylesCard.productInfo}>
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.description}>{item.description}</Text>
-      <Text style={styles.status}>price: {item.price}</Text>
-      <Text style={styles.status}>discount: {item.discount} %</Text>
+      <Text style={stylesCard.productName}>{item.name}</Text>
+      <Text style={stylesCard.productInfo}>{item.description}</Text>
+      <Text style={stylesCard.productName}>price: {item.price}</Text>
+      <Text style={stylesCard.productName}>discount: {item.discount} %</Text>
     </View>
   </View>
 )
@@ -44,6 +44,7 @@ const Offers = ({navigation}) => {
           <TextInput
             style={styles.searchInput}
             placeholder="Buscar en Mercado Libre"
+            placeholderTextColor={'#000'}
           />
         </View>
 

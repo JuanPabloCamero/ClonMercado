@@ -38,6 +38,7 @@ const ItemCategory = ({ navigation }) => {
           <TextInput
             style={styles.searchInput}
             placeholder="Buscar en Mercado Libre"
+            placeholderTextColor={'#000'}
           />
         </View>
 

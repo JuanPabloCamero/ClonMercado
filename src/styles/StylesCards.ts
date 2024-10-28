@@ -39,8 +39,8 @@ export const stylesCard = StyleSheet.create({
     elevation: 3,
     width: '94%',
     marginLeft: 14,
-    marginTop: 10
-      
+    marginTop: 10,
+    color:'#000'
   },
 
   cardHeader: {
@@ -52,18 +52,21 @@ export const stylesCard = StyleSheet.create({
     fontSize: 14,
     flex: 1,
     marginHorizontal: 10,
+    color:'#000'
   },
 
   productName: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
+    color:'#000'
   },
 
   productCategory: {
     fontSize: 12,
     fontStyle: 'italic',
     marginBottom: 5,
+    color:'#000'
   },
 
   Images: {
@@ -73,6 +76,7 @@ export const stylesCard = StyleSheet.create({
   },
 
   price:{
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+    color:'#000'
+  }
 })

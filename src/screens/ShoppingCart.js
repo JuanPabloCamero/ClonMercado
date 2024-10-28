@@ -41,11 +41,11 @@ const ShoppingCart = ({ navigation }) => {
       <Image source={item.image} style={stylesCart.thumbnail} />
       <View style={stylesCart.itemInfo}>
         <Text style={stylesCart.itemName}>{item.name}</Text>
-        <Text>{item.description}</Text>
+        <Text style={stylesCart.itemInfo}>{item.description}</Text>
         <Text>{item.price}</Text>
         <View style={stylesCart.quantityContainer}>
           <Pressable onPress={() => updateQuantity(item.id, -1)} style={stylesCart.quantityButton}>
-            <Text>-</Text>
+            <Text style={stylesCart.itemInfo}>-</Text>
           </Pressable>
           <TextInput
             style={stylesCart.quantityInput}
@@ -57,7 +57,7 @@ const ShoppingCart = ({ navigation }) => {
             }}
           />
           <Pressable onPress={() => updateQuantity(item.id, 1)} style={stylesCart.quantityButton}>
-            <Text>+</Text>
+            <Text style={stylesCart.itemInfo}>+</Text>
           </Pressable>
         </View>
         <Pressable onPress={() => removeItem(item.id)} style={stylesCart.removeButton}>
@@ -79,6 +79,7 @@ const ShoppingCart = ({ navigation }) => {
           <TextInput
             style={styles.searchInput}
             placeholder="Buscar en Mercado Libre"
+            placeholderTextColor={'#000'}
           />
         </View>
 
@@ -95,7 +96,7 @@ const ShoppingCart = ({ navigation }) => {
       />
 
       <Pressable onPress={handleCheckout} style={stylesPayment.pagarButton}>
-        <Text>Proceed to checkout</Text>
+        <Text style={stylesPayment.text}>Proceed to checkout</Text>
       </Pressable>
     </View>
   );

@@ -21,11 +21,12 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flex: 1,
     marginHorizontal: 10,
+    color:'#000'
   },
   searchInput: {
     flex: 1,
     paddingHorizontal: 10,
-    color: 'black',
+    color: '#000',
   },
   body: {
     flex: 1,
@@ -59,7 +60,7 @@ export const styles = StyleSheet.create({
 
   Images: {
     width: 140,
-    height: 100,
-  },
+    height: 100,
+  },
 
 })

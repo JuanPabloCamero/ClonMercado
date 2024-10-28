@@ -68,6 +68,7 @@ const Home = ({ navigation }) => {
           <TextInput
             style={styles.searchInput}
             placeholder="Buscar en Mercado Libre"
+            placeholderTextColor={'#000'}
           />
         </View>
 
@@ -85,13 +86,13 @@ const Home = ({ navigation }) => {
                 <View style={stylesCard.cardHeader}>
                   <Image source={item.image} style={styles.Images} />
                   {isFavorite(item) && (
-                    <Ionicons name="star" size={20} color="gold" style={{ position: 'absolute', top: 5, left: 250 }} />
+                    <Ionicons name="star" size={20} color="gold" style={{ position: 'absolute', top: 5, left: 200 }} />
                   )}
                 </View>
                 <View style={stylesCard.productInfo}>
                   <Text style={stylesCard.productName}>{item.name}</Text>
                   <Text style={stylesCard.productCategory}>Category: {item.category}</Text>
-                  <Text>{item.description}</Text>
+                  <Text style={stylesCard.productInfo}>{item.description}</Text>
                   <Text style={stylesCard.price}>{item.price}</Text>
                 </View>
               </View>

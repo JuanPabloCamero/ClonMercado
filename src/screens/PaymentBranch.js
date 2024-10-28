@@ -20,6 +20,7 @@ import { stylesPayment } from '../styles/PaymentStyles'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { ScrollView } from 'react-native-gesture-handler'
+import { stylesCart } from '../styles/ShoppingCart'
 
 const PaymentBranch = (props) => {
   const { route, navigation } = props;
@@ -79,6 +80,7 @@ const PaymentBranch = (props) => {
           <TextInput
             style={styles.searchInput}
             placeholder="Buscar en Mercado Libre"
+            placeholderTextColor={'#000'}
           />
         </View>
 
@@ -98,15 +100,15 @@ const PaymentBranch = (props) => {
               <View style={stylesPayment.infoContainer}>
                 <Text style={stylesPayment.name}>{item.name}</Text>
                 <Text style={stylesPayment.description}>{item.description}</Text>
-                <Text>Valor: {item.price}</Text>
-                <Text>Cantidad: {item.quantity || 1}</Text>
-                <Text>Subtotal: {(parseFloat(item.price.replace(/[^\d.-]/g, '')) * (item.quantity || 1)).toFixed(2)}</Text>
+                <Text style={stylesPayment.price}>Valor: {item.price}</Text>
+                <Text style={stylesPayment.price}>Cantidad: {item.quantity || 1}</Text>
+                <Text style={stylesPayment.price}>Subtotal: {(parseFloat(item.price.replace(/[^\d.-]/g, '')) * (item.quantity || 1)).toFixed(2)}</Text>
               </View>
             </View>
           )}
           keyExtractor={(item) => item.id.toString()}
           ListFooterComponent={
-            <Text style={stylesPayment.total}>Total: ${totalValue.toFixed(2)}</Text>
+            <Text style={stylesPayment.price}>Total: ${totalValue.toFixed(2)}</Text>
           }
         />
 
@@ -115,6 +117,8 @@ const PaymentBranch = (props) => {
           <Text style={stylesPayment.text}>Dirección de Entrega:</Text>
           <TextInput
             style={stylesPayment.input}
+            placeholderTextColor={'#000'}
+            placeholder='Direccion de entrega'
             value={address}
             maxLength={30}
             onChangeText={handleAddress}
@@ -155,12 +159,14 @@ const PaymentBranch = (props) => {
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
+                    placeholderTextColor={'#000'}
                     maxLength={20}
                   />
                   <Text style={stylesPayment.text}>Nombre del titular:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Nombre del Titular"
+                    placeholderTextColor={'#000'}
                     maxLength={50}
                   />
                 </View>
@@ -171,11 +177,13 @@ const PaymentBranch = (props) => {
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
+                    placeholderTextColor={'#000'}
                     maxLength={20}
                   />
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Código de Banco"
+                    placeholderTextColor={'#000'}
                     maxLength={10}
                   />
                 </View>
@@ -186,11 +194,13 @@ const PaymentBranch = (props) => {
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
+                    placeholderTextColor={'#000'}
                     maxLength={20}
                   />
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Nombre del Titular"
+                    placeholderTextColor={'#000'}
                     maxLength={50}
                   />
                 </View>
@@ -201,11 +211,13 @@ const PaymentBranch = (props) => {
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
+                    placeholderTextColor={'#000'}
                     maxLength={20}
                   />
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Nombre del Titular"
+                    placeholderTextColor={'#000'}
                     maxLength={50}
                   />
                 </View>
@@ -216,11 +228,13 @@ const PaymentBranch = (props) => {
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
+                    placeholderTextColor={'#000'}
                     maxLength={20}
                   />
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Nombre del Titular"
+                    placeholderTextColor={'#000'}
                     maxLength={50}
                   />
                 </View>
@@ -231,11 +245,13 @@ const PaymentBranch = (props) => {
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
+                    placeholderTextColor={'#000'}
                     maxLength={20}
                   />
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Nombre del Titular"
+                    placeholderTextColor={'#000'}
                     maxLength={50}
                   />
                 </View>
@@ -246,11 +262,13 @@ const PaymentBranch = (props) => {
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
+                    placeholderTextColor={'#000'}
                     maxLength={20}
                   />
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Nombre del Titular"
+                    placeholderTextColor={'#000'}
                     maxLength={50}
                   />
                 </View>
@@ -263,7 +281,7 @@ const PaymentBranch = (props) => {
       
       <View style={stylesPayment.containerPagar}>
         <Pressable onPress={handlePayment} style={stylesPayment.pagarButton}>
-          <Text>Pagar</Text>
+          <Text style={stylesPayment.text}>Pagar</Text>
         </Pressable>
       </View>
       

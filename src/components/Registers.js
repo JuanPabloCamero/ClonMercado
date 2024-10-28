@@ -1,170 +1,175 @@
-import React, { useRef, useState, useEffect, useContext } from 'react'
-import { View, Text, Alert, TextInput, Pressable, Image } from 'react-native'
-import { Picker } from '@react-native-picker/picker'
-import { styles } from '../styles/GlobalStyles'
-import { colombiaData } from '../data/colombiaData'
-import { AuthContext } from '../context/AuthContext'
+import React, { useRef, useState, useEffect, useContext } from 'react';
+import { View, Text, Alert, TextInput, Pressable, Image } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { styles } from '../styles/GlobalStyles';
+import { colombiaData } from '../data/colombiaData';
+import { AuthContext } from '../context/AuthContext';
 
 const Registers = ({ navigation }) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [email, setEmail] = useState('')
-  const [birthdate, setBirthdate] = useState('')
-  const [address, setAddress] = useState('')
-  const [selectedDepartment, setSelectedDepartment] = useState('')
-  const [selectedCity, setSelectedCity] = useState('')
+  const [usuario, setUsuario] = useState('');
+  const [contraseña, setContraseña] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [fechaNacimiento, setFechaNacimiento] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [departamentoSeleccionado, setDepartamentoSeleccionado] = useState('');
+  const [ciudadSeleccionada, setCiudadSeleccionada] = useState('');
 
-  const {dispatch} =  useContext(AuthContext)
-
-  const emailRef = useRef('')
-  const departments = Object.keys(colombiaData)
+  const { dispatch } = useContext(AuthContext);
+  const correoRef = useRef('');
+  const departamentos = Object.keys(colombiaData);
 
   useEffect(() => {
-    if (emailRef.current !== email) {
-      emailRef.current = email
-    }
-  }, [email])
+    if (correoRef.current !== correo) {
+      correoRef.current = correo;
+    }
+  }, [correo]);
 
-  
-  const getCityOptions = (dept) => colombiaData[dept] || []
+  const obtenerCiudades = (dept) => colombiaData[dept] || [];
 
-  const validateUsername = (username) => username.length <= 10
+  const validarUsuario = (usuario) => usuario.length <= 10;
 
-  const validatePassword = (password) => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-    return passwordRegex.test(password)
+  const validarContraseña = (contraseña) => {
+    const regexContraseña = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regexContraseña.test(contraseña);
   };
 
-  const validateEmail = (email) => email.includes('@')
+  const validarCorreo = (correo) => correo.includes('@');
 
-  const validateBirthdate = (birthdate) => {
-    const today = new Date()
-    const birthDate = new Date(birthdate)
-    const age = today.getFullYear() - birthDate.getFullYear()
-    const maxAge = 50
-    const minAge = 18
+  const validarFechaNacimiento = (fechaNacimiento) => {
+    const hoy = new Date();
+    const fechaNacimientoDate = new Date(fechaNacimiento);
+    const edad = hoy.getFullYear() - fechaNacimientoDate.getFullYear();
+    const edadMaxima = 50;
+    const edadMinima = 18;
 
-    if (age < minAge || age > maxAge) {
-      Alert.alert('Error', 'No estás en el rango de edad permitido')
-      return false
+    if (edad < edadMinima || edad > edadMaxima) {
+      Alert.alert('Error', 'No estás en el rango de edad permitido');
+      return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
   const handleRegister = () => {
-    if (!validateUsername(username)) {
-      Alert.alert('Error', 'El nombre del usuario debe contener máximo 10 caracteres')
-      return
+    if (!validarUsuario(usuario)) {
+      Alert.alert('Error', 'El nombre de usuario debe contener máximo 10 caracteres');
+      return;
     }
 
-    if (!validatePassword(password)) {
-      Alert.alert('Error', 'La contraseña debe contener 8 caracteres, incluyendo mayúsculas, minúsculas, números y caracteres especiales')
-      return
+    if (!validarContraseña(contraseña)) {
+      Alert.alert('Error', 'La contraseña debe contener 8 caracteres, incluyendo mayúsculas, minúsculas, números y caracteres especiales');
+      return;
     }
 
-    if (!validateEmail(email)) {
-      Alert.alert('Error', 'El correo no es válido')
-      return
+    if (!validarCorreo(correo)) {
+      Alert.alert('Error', 'El correo no es válido');
+      return;
     }
 
-    if (!validateBirthdate(birthdate)) {
-      return
+    if (!validarFechaNacimiento(fechaNacimiento)) {
+      return;
     }
 
-    if (address.length > 30) {
-      Alert.alert('Error', 'La dirección no debe exceder los 30 caracteres')
-      return
+    if (direccion.length > 30) {
+      Alert.alert('Error', 'La dirección no debe exceder los 30 caracteres');
+      return;
     }
 
-    if (!selectedDepartment || !selectedCity) {
-      Alert.alert('Error', 'Debes seleccionar un departamento y ciudad')
-      return
+    if (!departamentoSeleccionado || !ciudadSeleccionada) {
+      Alert.alert('Error', 'Debes seleccionar un departamento y ciudad');
+      return;
     }
 
     dispatch({
-      type: 'LOGIN', 
+      type: 'REGISTER_USER',
       payload: {
-        username,
-        email,
-        department: selectedDepartment,
-        city: selectedCity,
-        address,
-      }
-    })
+          usuario,
+          contraseña,
+          correo,
+          fechaNacimiento, 
+          departamento: departamentoSeleccionado,
+          ciudad: ciudadSeleccionada,
+          direccion,
+      },
+    });
 
-    Alert.alert('Registro exitoso', `${username}`)
-    navigation.navigate('Login')
+    Alert.alert('Registro exitoso', `Bienvenido ${usuario}`);
+    navigation.navigate('Login');
 
-    setUsername('')
-    setPassword('')
-    setEmail('')
-    setBirthdate('')
-    setAddress('')
-    setSelectedDepartment('')
-    setSelectedCity('')
-  }
+    setUsuario('');
+    setContraseña('');
+    setCorreo('');
+    setFechaNacimiento('');
+    setDireccion('');
+    setDepartamentoSeleccionado('');
+    setCiudadSeleccionada('');
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.containerLogo}>
         <Image source={require('../assets/newUser.png')} style={styles.Images} />
       </View>
-      <Text style={styles.title}>Create Account</Text>
+      <Text style={styles.title}>Crear Cuenta</Text>
 
       <TextInput
         style={styles.input}
-        placeholder='Username'
-        value={username}
-        onChangeText={setUsername}
+        placeholder='Usuario'
+        placeholderTextColor={'#000'}
+        value={usuario}
+        onChangeText={setUsuario}
         maxLength={10}
         autoCapitalize='none'
       />
 
       <TextInput
         style={styles.input}
-        placeholder='Password'
-        value={password}
-        onChangeText={setPassword}
+        placeholder='Contraseña'
+        placeholderTextColor={'#000'}
+        value={contraseña}
+        onChangeText={setContraseña}
         secureTextEntry
         maxLength={8}
       />
 
       <TextInput
         style={styles.input}
-        placeholder='Email'
-        value={email}
-        onChangeText={setEmail}
+        placeholder='Correo'
+        placeholderTextColor={'#000'}
+        value={correo}
+        onChangeText={setCorreo}
         autoCapitalize='none'
         keyboardType='email-address'
       />
 
       <TextInput
         style={styles.input}
-        placeholder='Birthdate (YYYY-MM-DD)'
-        value={birthdate}
-        onChangeText={setBirthdate}
+        placeholder='Fecha de nacimiento (AAAA-MM-DD)'
+        placeholderTextColor={'#000'}
+        value={fechaNacimiento}
+        onChangeText={setFechaNacimiento}
         keyboardType='date'
       />
 
       <TextInput
         style={styles.input}
-        placeholder='Address'
-        value={address}
-        onChangeText={setAddress}
+        placeholder='Dirección'
+        placeholderTextColor={'#000'}
+        value={direccion}
+        onChangeText={setDireccion}
       />
 
       <View style={styles.pickerContainer}>
         <Picker
-          selectedValue={selectedDepartment}
+          selectedValue={departamentoSeleccionado}
           onValueChange={(itemValue) => {
-            setSelectedDepartment(itemValue)
-            setSelectedCity('')
+            setDepartamentoSeleccionado(itemValue);
+            setCiudadSeleccionada('');
           }}
           style={styles.picker}
         >
-          <Picker.Item label="Select Department" value="" />
-          {departments.map((dept) => (
+          <Picker.Item label="Seleccionar Departamento" value="" />
+          {departamentos.map((dept) => (
             <Picker.Item key={dept} label={dept} value={dept} />
           ))}
         </Picker>
@@ -172,25 +177,25 @@ const Registers = ({ navigation }) => {
 
       <View style={styles.pickerContainer}>
         <Picker
-          selectedValue={selectedCity}
+          selectedValue={ciudadSeleccionada}
           onValueChange={(itemValue) => {
-            setSelectedCity(itemValue)
+            setCiudadSeleccionada(itemValue);
           }}
           style={styles.picker}
-          enabled={selectedDepartment !== ''}
+          enabled={departamentoSeleccionado.length > 0}
         >
-          <Picker.Item label="Select City" value="" />
-          {getCityOptions(selectedDepartment).map((cityName) => (
-            <Picker.Item key={cityName} label={cityName} value={cityName} />
+          <Picker.Item label="Seleccionar Ciudad" value="" />
+          {obtenerCiudades(departamentoSeleccionado).map((ciudad) => (
+            <Picker.Item key={ciudad} label={ciudad} value={ciudad} />
           ))}
         </Picker>
       </View>
 
-      <Pressable style={styles.loginButton} onPress={handleRegister}>
-        <Text style={styles.loginButtonText}>Register</Text>
+      <Pressable style={styles.registerButton} onPress={handleRegister}>
+        <Text style={styles.registerButtonText}>REGISTRAR</Text>
       </Pressable>
     </View>
-  )
-}
+  );
+};
 
-export default Registers
+export default Registers;

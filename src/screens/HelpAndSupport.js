@@ -59,6 +59,7 @@ const HelpAndSupport = ({ navigation }) => {
           <TextInput
             style={styles.searchInput}
             placeholder="Buscar en Mercado Libre"
+            placeholderTextColor={'#000'}
           />
         </View>
 
@@ -83,12 +84,13 @@ const HelpAndSupport = ({ navigation }) => {
           style={helpStyles.textInput}
           multiline
           placeholder="Descripción"
+          placeholderTextColor={'#000'}
           maxLength={300}
           value={state.description}
           onChangeText={(text) => dispatch({ type: 'SET_DESCRIPTION', payload: text })}
         />
         <Pressable onPress={handleSubmit} style={stylesPayment.pagarButton}>
-          <Text>Enviar solicitud</Text>
+          <Text style={helpStyles.text}>Enviar solicitud</Text>
         </Pressable>
       </View>
     </View>

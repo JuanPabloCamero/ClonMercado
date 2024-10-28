@@ -10,12 +10,14 @@ export const helpStyles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginBottom: 10,
+    color:'#000'
   },
 
   picker: {
     height: 50,
     backgroundColor: '#D2F0FA',
     marginBottom: 20,
+    color:'#000'
   },
 
   textInput: {
@@ -26,6 +28,12 @@ export const helpStyles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     textAlignVertical: 'top',
+    color:'#000'
   },
+
+  text: {
+    color:'#000',
+    fontWeight:'bold'
+  }
     
 })

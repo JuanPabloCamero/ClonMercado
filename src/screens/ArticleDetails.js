@@ -81,6 +81,7 @@ const ArticleDetails = ({ navigation }) => {
           <TextInput
             style={styles.searchInput}
             placeholder="Buscar en Mercado Libre"
+            placeholderTextColor={'#000'}
           />
         </View>
 
@@ -160,6 +161,7 @@ const ArticleDetails = ({ navigation }) => {
                           maxLength={200}
                           onChangeText={(text) => handleSetRatingComment(product.id, text)}
                           placeholder="Escribe un comentario sobre tu calificación"
+                          placeholderTextColor={'#000'}
                         />
                       )}
 
@@ -176,8 +178,8 @@ const ArticleDetails = ({ navigation }) => {
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) =>
                           <View style={stylesDetails.commentItem}>
-                            <Text>Rating: {item.rating} estrellas</Text>
-                            <Text>Comentario: {item.comment}</Text>
+                            <Text style={stylesDetails.text}>Rating: {item.rating} estrellas</Text>
+                            <Text style={stylesDetails.text}>Comentario: {item.comment}</Text>
                           </View>
                         }
                       />
