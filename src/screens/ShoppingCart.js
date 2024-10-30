@@ -42,7 +42,7 @@ const ShoppingCart = ({ navigation }) => {
       <View style={stylesCart.itemInfo}>
         <Text style={stylesCart.itemName}>{item.name}</Text>
         <Text style={stylesCart.itemInfo}>{item.description}</Text>
-        <Text>{item.price}</Text>
+        <Text style={stylesCart.itemName}>{item.price}</Text>
         <View style={stylesCart.quantityContainer}>
           <Pressable onPress={() => updateQuantity(item.id, -1)} style={stylesCart.quantityButton}>
             <Text style={stylesCart.itemInfo}>-</Text>

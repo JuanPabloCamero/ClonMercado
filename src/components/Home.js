@@ -57,7 +57,7 @@ const Home = ({ navigation }) => {
   };
 
   return (
-    <View style={stylesCard.container}>
+    <View style={stylesCard.paddingHome}>
       <View style={styles.header}>
         <Pressable onPress={() => navigation.navigate('Menu')}>
           <Ionicons name='menu' size={30} color="black" />
@@ -77,7 +77,7 @@ const Home = ({ navigation }) => {
         </Pressable>
       </View>
 
-      <View>
+      <View styles={stylesCard.container}>
         <FlatList
           data={productsData}
           renderItem={({ item }) => (

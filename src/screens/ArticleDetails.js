@@ -125,7 +125,7 @@ const ArticleDetails = ({ navigation }) => {
                     <View style={stylesDetails.questionsContainer}>
                       <Text style={stylesDetails.name}>Preguntas al vendedor</Text>
                       <TextInput
-                        style={stylesDetails.input}
+                        style={stylesDetails.input2}
                         value={question}
                         maxLength={100}
                         onChangeText={setQuestion}
@@ -139,7 +139,11 @@ const ArticleDetails = ({ navigation }) => {
                       <FlatList
                         data={productQuestions}
                         keyExtractor={(item, index) => index.toString()}
-                        renderItem={({ item }) => <Text>{item}</Text>}
+                        renderItem={({ item }) => 
+                          <View style={stylesDetails.commentItem}>
+                            <Text style={stylesDetails.text}>{item}</Text>
+                          </View>
+                        }
                       />
                     </View>
 

@@ -36,9 +36,9 @@ export const stylesCategory = StyleSheet.create({
     elevation: 2,
   },
   productImage: {
-    width: '90%',
-    height: 380,
-    borderRadius: 10,
+    width: '40%',
+    height: 100,
+    marginLeft: 100,
   },
   productName: {
     fontSize: 18,

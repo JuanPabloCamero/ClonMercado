@@ -14,9 +14,9 @@ const MyFavorites = ({ navigation }) => {
     <View style={stylesCard.Card}>
       <Image source={item.image} style={styles.Images} />
       <View style={stylesCard.productInfo}>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-        <Text style={styles.status}>Status: Available</Text>
+        <Text style={stylesCard.productName}>{item.name}</Text>
+        <Text style={stylesCard.productInfo}>{item.description}</Text>
+        <Text style={stylesCard.price}>Status: Available</Text>
       </View>
     </View>
   );

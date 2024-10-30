@@ -78,5 +78,10 @@ export const stylesCard = StyleSheet.create({
   price:{
     fontWeight: 'bold',
     color:'#000'
-  }
+  },
+
+  paddingHome:{
+    backgroundColor: '#fff',
+    paddingBottom: 165,
+  },
 })
