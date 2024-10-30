@@ -12,10 +12,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const MyShoppings = ({ navigation }) => {
   const { state } = useContext(AuthContext); 
-  const { cartItems } = state;
+  const { purchasedItems ={}} = state;
 
-  const renderItem = ({ item }) => (
-    <View style={stylesCard.Card}>
+  const renderItem = ({ item, index }) => (
+    <View style={stylesCard.Card} key={index}>
       <Image source={item.image} style={styles.Images} />
       <View style={stylesCard.productInfo}>
         <Text style={stylesCard.productName}>{item.name}</Text>
@@ -47,9 +47,9 @@ const MyShoppings = ({ navigation }) => {
       </View>
 
       <FlatList
-        data={cartItems} 
+        data={purchasedItems} 
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
       />
     </View>
   );

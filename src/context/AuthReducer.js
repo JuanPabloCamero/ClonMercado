@@ -6,6 +6,7 @@ export const initialState = {
     address: '',
     cartItems: [],
     registeredUsers:[],
+    purchasedItems: [],
 };
 
 export const AuthReducer = (state, action) =>{
@@ -83,6 +84,12 @@ export const AuthReducer = (state, action) =>{
             return {
                 ...state,
                 cartItems:[]
+            }
+        case 'COMPLETE_PURCHASE':
+            return {
+                ...state,
+                purchasedItems: [...state.purchasedItems, ...state.cartItems],
+                cartItems: [],
             }
         default:
           return state;

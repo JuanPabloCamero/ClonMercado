@@ -7,13 +7,12 @@ export const stylesProfile = StyleSheet.create ({
     padding: 20,
     alignItems: 'center',
     backgroundColor: '#3E53F7',
-    alignContent: 'center'
+    alignContent: 'center',
   },
   profileCard: {
     backgroundColor: '#fff',
     borderRadius: 10,
-    padding: 15,
-    marginBottom: 15,
+    padding: 30,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 }, 
     shadowOpacity: 0.3,
@@ -21,13 +20,15 @@ export const stylesProfile = StyleSheet.create ({
     elevation: 5,
     height: 250, 
     overflow: 'hidden', 
+    paddingLeft: 50,
+    paddingRight: 50,
   },
   photo: {
     width: 95,
     height: 100,
-    borderRadius: 50,
+    borderRadius: 20,
     marginBottom: 20,
-    marginLeft: 26
+    marginLeft: 20,
   },
   infoContainer: {
     alignItems: 'center',
@@ -53,4 +54,12 @@ export const stylesProfile = StyleSheet.create ({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  title: {
+    color: '#000',
+    textAlign: 'center'
+  },
+  infoText: {
+    color: '#000',
+    textAlign: 'center'
+  },
 })

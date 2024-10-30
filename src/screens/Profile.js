@@ -35,22 +35,17 @@ const Perfil = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={stylesProfile.container}>
-      <View style={stylesProfile.containerImage}>
-        <Image source={require('../assets/fotoPerfil.png')} style={stylesProfile.photo} />
-      </View>
-      <Text style={stylesProfile.title}>Bienvenido, {usuario}!</Text>
-
-
-      <TextInput
-        style={stylesProfile.input}
-        placeholder="Fecha de nacimiento (dd/mm/yyyy)"
-        value={fechaNacimiento}
-        onChangeText={setFechaNacimiento}
-      />
-
-      
-    </ScrollView>
+      <ScrollView contentContainerStyle={stylesProfile.container}>
+        <View style={stylesProfile.profileCard}>
+          <View style={stylesProfile.containerImage}>
+            <Image source={require('../assets/fotoPerfil.png')} style={stylesProfile.photo} />
+          </View>
+          <Text style={stylesProfile.title}>Bienvenido, {usuario}!</Text>
+          <Text style={stylesProfile.infoText}>Correo: {correo}</Text>
+          <Text style={stylesProfile.infoText}>Fecha de nacimiento: {fechaNacimiento}</Text> 
+          </View>
+      </ScrollView>
+    
   );
 };
 

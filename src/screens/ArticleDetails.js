@@ -38,12 +38,26 @@ const ArticleDetails = ({ navigation }) => {
     const productRating = ratingData[productId]?.rating;
     const productRatingComment = ratingData[productId]?.comment;
 
+    if (!productRatingComment) {
+      Alert.alert('Error', 'Para dar tu puntuación debes hacer un comentario');
+      return;
+    }
+
     if (productRating && productRatingComment.length <= 200) {
       dispatch({
         type: 'ADD_COMMENT',
         payload: { productId, comment: { rating: productRating, comment: productRatingComment } },
       });
       Alert.alert('Éxito', 'Calificación enviada');
+
+      setRatingData((prevData) => ({
+        ...prevData,
+        [productId]: {
+          rating: 0,
+          comment: '',
+        },
+      }));
+      
     } else {
       Alert.alert('Error', 'Por favor califique el producto y escriba un comentario válido');
     }

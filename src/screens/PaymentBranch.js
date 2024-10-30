@@ -47,6 +47,8 @@ const PaymentBranch = (props) => {
     items.forEach(item => {
       dispatch({type: 'ADD_ITEM_TO_CART', payload:{...item, status: 'Comprado'}})
     })
+    dispatch({type: 'COMPLETE_PURCHASE'})
+    dispatch({type: 'CLEAR_CART'})
     dispatch({type: 'RESET_PAYMENT'})
     navigation.navigate('Home', { clearCart: true })
   };
@@ -141,7 +143,7 @@ const PaymentBranch = (props) => {
               <Picker
                 selectedValue={selectedBank}
                 style={stylesPayment.picker}
-                onChangeValue={handleBank}
+                onValueChange={handleBank}
               >
                 <Picker.Item label="Bancolombia" value="Bank1" />
                 <Picker.Item label="Daviplata" value="Bank2" />
@@ -173,13 +175,15 @@ const PaymentBranch = (props) => {
               )}
               {selectedBank === 'Bank2' && (
                 <View style={stylesPayment.formContainer}>
-                  <Text>Formulario Banco 2:</Text>
+                  <Text style={stylesPayment.text}>Formulario Banco</Text>
+                  <Text style={stylesPayment.text}>Número de cuenta:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
                     placeholderTextColor={'#000'}
                     maxLength={20}
                   />
+                  <Text style={stylesPayment.text}>Código de banco:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Código de Banco"
@@ -190,13 +194,15 @@ const PaymentBranch = (props) => {
               )}
               {selectedBank === 'Bank3' && (
                 <View style={stylesPayment.formContainer}>
-                  <Text>Formulario Banco 3:</Text>
+                  <Text style={stylesPayment.text}>Formulario Banco</Text>
+                  <Text style={stylesPayment.text}>Número de cuenta:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
                     placeholderTextColor={'#000'}
                     maxLength={20}
                   />
+                  <Text style={stylesPayment.text}>Nombre del titular:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Nombre del Titular"
@@ -207,13 +213,15 @@ const PaymentBranch = (props) => {
               )}
               {selectedBank === 'Bank4' && (
                 <View style={stylesPayment.formContainer}>
-                  <Text>Formulario Banco 4:</Text>
+                  <Text style={stylesPayment.text}>Formulario Banco</Text>
+                  <Text style={stylesPayment.text}>Número de cuenta:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
                     placeholderTextColor={'#000'}
                     maxLength={20}
                   />
+                  <Text style={stylesPayment.text}>Nombre del titular:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Nombre del Titular"
@@ -224,13 +232,15 @@ const PaymentBranch = (props) => {
               )}
               {selectedBank === 'Bank5' && (
                 <View style={stylesPayment.formContainer}>
-                  <Text>Formulario Banco 5:</Text>
+                  <Text style={stylesPayment.text}>Formulario Banco</Text>
+                  <Text style={stylesPayment.text}>Número de cuenta:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
                     placeholderTextColor={'#000'}
                     maxLength={20}
                   />
+                  <Text style={stylesPayment.text}>Nombre del titular:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Nombre del Titular"
@@ -241,13 +251,15 @@ const PaymentBranch = (props) => {
               )}
               {selectedBank === 'Bank6' && (
                 <View style={stylesPayment.formContainer}>
-                  <Text>Formulario Banco 6:</Text>
+                  <Text style={stylesPayment.text}>Formulario Banco</Text>
+                  <Text style={stylesPayment.text}>Número de cuenta:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
                     placeholderTextColor={'#000'}
                     maxLength={20}
                   />
+                  <Text style={stylesPayment.text}>Nombre del titular:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Nombre del Titular"
@@ -258,13 +270,15 @@ const PaymentBranch = (props) => {
               )}
               {selectedBank === 'Bank7' && (
                 <View style={stylesPayment.formContainer}>
-                  <Text>Formulario Banco 7:</Text>
+                  <Text style={stylesPayment.text}>Formulario Banco</Text>
+                  <Text style={stylesPayment.text}>Número de cuenta:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Número de Cuenta"
                     placeholderTextColor={'#000'}
                     maxLength={20}
                   />
+                  <Text style={stylesPayment.text}>Nombre del titular:</Text>
                   <TextInput
                     style={stylesPayment.input}
                     placeholder="Nombre del Titular"
